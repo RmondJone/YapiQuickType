@@ -6,6 +6,7 @@ import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
+import com.guohanlin.utils.SharePreferences
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
@@ -34,13 +35,13 @@ class YApiApplication : StartupActivity, DumbAware {
         val token: String
         val params = HashMap<String, String>()
         if (settingConfig.isNullOrEmpty()) {
-            params["project_id"] = "22"
-            params["token"] = "bbb082219266b9a54c3e925636867b8cfaec5d39b0c44c2e5cbfd3e35d026592"
-            token = "bbb082219266b9a54c3e925636867b8cfaec5d39b0c44c2e5cbfd3e35d026592"
+            params["project_id"] = "143242"
+            params["token"] = "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
+            token = "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
             val projectSetting = ProjectSetting(
-                "康众汽配",
-                "22",
-                "bbb082219266b9a54c3e925636867b8cfaec5d39b0c44c2e5cbfd3e35d026592"
+                "测试项目",
+                "143242",
+                "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
             )
             Constant.projectList = arrayListOf(projectSetting)
         } else {
@@ -50,8 +51,9 @@ class YApiApplication : StartupActivity, DumbAware {
             token = jsonArray[0].projectToken
             Constant.projectList = jsonArray as ArrayList<ProjectSetting>
         }
+        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
         //请求第一个工程的YApi接口菜单
-        Api.getService(ApiService::class.java, Constant.BASE_URL).getCatMenu(params)
+        Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())
             .subscribe {
                 //注入到内存当中
@@ -61,7 +63,7 @@ class YApiApplication : StartupActivity, DumbAware {
                     val catParams = HashMap<String, String>()
                     catParams["catid"] = it.data[0]._id.toString()
                     catParams["token"] = token
-                    Api.getService(ApiService::class.java, Constant.BASE_URL).getInterfaceByCat(catParams)
+                    Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(catParams)
                         .subscribeOn(Schedulers.io())
                         .subscribe {
                             if (it.errcode == 0 && it.data.count > 0) {

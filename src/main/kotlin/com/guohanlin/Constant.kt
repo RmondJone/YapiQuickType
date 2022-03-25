@@ -14,6 +14,9 @@ object Constant {
     //QuickType服务地址
     const val QUICK_TYPE_URL = "http://quicktype.guohanlin.com/"
 
+    //基本路径保存Key
+    const val yApiBaseUri = "yApiBaseUri"
+
     //项目配置列表
     var projectList: ArrayList<ProjectSetting> = arrayListOf()
 

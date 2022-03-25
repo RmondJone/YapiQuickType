@@ -7,6 +7,7 @@ import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
 import com.guohanlin.utils.NumberTextField
+import com.guohanlin.utils.SharePreferences
 import com.intellij.openapi.ui.DialogWrapper
 import io.reactivex.schedulers.Schedulers
 import java.awt.Dimension
@@ -106,7 +107,8 @@ class SelectApiDialog(canBeParent: Boolean) : DialogWrapper(canBeParent) {
         val params = HashMap<String, String>()
         params["token"] = projectSetting.projectToken
         params["project_id"] = projectSetting.projectId
-        Api.getService(ApiService::class.java, Constant.BASE_URL).getCatMenu(params)
+        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+        Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())
             .subscribe {
                 if (it.errcode == 0) {
@@ -127,7 +129,8 @@ class SelectApiDialog(canBeParent: Boolean) : DialogWrapper(canBeParent) {
         val params = HashMap<String, String>()
         params["catid"] = catMenuData._id.toString()
         params["token"] = projectSetting.projectToken
-        Api.getService(ApiService::class.java, Constant.BASE_URL).getInterfaceByCat(params)
+        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+        Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(params)
             .subscribeOn(Schedulers.io())
             .subscribe {
                 if (it.errcode == 0) {

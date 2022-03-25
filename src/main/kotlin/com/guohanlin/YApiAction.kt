@@ -8,6 +8,7 @@ import com.guohanlin.ui.SelectApiDialog
 import com.guohanlin.utils.AndroidWriteCommandBuilder
 import com.guohanlin.utils.FlutterWriteCommandBuilder
 import com.guohanlin.utils.ReactWriteCommandBuilder
+import com.guohanlin.utils.SharePreferences
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -55,7 +56,8 @@ class YApiAction : AnAction() {
             val params = HashMap<String, String>()
             params["id"] = interfaceInfo._id.toString()
             params["token"] = projectSetting.projectToken
-            Api.getService(ApiService::class.java, Constant.BASE_URL).getInterfaceDetail(params)
+            val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+            Api.getService(ApiService::class.java, baseUri).getInterfaceDetail(params)
                 .subscribeOn(Schedulers.io())
                 .subscribe { interfaceDetail ->
                     run {
