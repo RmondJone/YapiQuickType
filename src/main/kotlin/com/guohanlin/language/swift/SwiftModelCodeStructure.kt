@@ -1,27 +1,20 @@
-package com.guohanlin.flutter
+package com.guohanlin.language.swift
 
 import com.guohanlin.CodeStructure
 import com.guohanlin.model.InterfaceDetailInfoData
 import com.guohanlin.model.InterfaceResponseDTO
-import com.guohanlin.utils.StringUtils
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 
-/**
- * 注释：Flutter Model代码构造器
- * 时间：2021/8/31 0031 15:57
- * 作者：郭翰林
- */
-class FlutterModelCodeStructure(
+class SwiftModelCodeStructure(
     directory: PsiDirectory,
     data: InterfaceDetailInfoData,
     modelName: String,
     interfaceResponseDTO: InterfaceResponseDTO
-) :
-    CodeStructure(directory, data) {
-    private var fileName: String = StringUtils.humpToUnderscore(modelName, true)
+) : CodeStructure(directory, data) {
+    private var fileName: String = modelName
     private var codeStr: String = interfaceResponseDTO.info
 
     override fun creatCode(): String {
@@ -35,10 +28,10 @@ class FlutterModelCodeStructure(
     }
 
     override fun creatFileName(): String {
-        return "${fileName}.dart"
+        return "${fileName}.swift"
     }
 
     override fun creatFileType(): FileType {
-        return DartFileType()
+        return SwiftFileType();
     }
 }

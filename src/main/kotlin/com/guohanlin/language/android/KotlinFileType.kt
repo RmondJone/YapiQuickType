@@ -1,4 +1,4 @@
-package com.guohanlin.android
+package com.guohanlin.language.android
 
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.vfs.VirtualFile

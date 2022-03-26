@@ -1,7 +1,7 @@
 package com.guohanlin.utils
 
 import com.guohanlin.creatPsiFile
-import com.guohanlin.language.react.ReactModelCodeStructure
+import com.guohanlin.language.cpp.CppModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
 import com.intellij.openapi.command.WriteCommandAction
@@ -9,11 +9,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
 /**
- * 注释：React 模块构造器
- * 时间：2022/3/24 15:00
+ * 注释：C++ 生成模块
+ * 时间：2022/3/26 11:52
  * 作者：郭翰林
  */
-open class ReactWriteCommandBuilder {
+class CppWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -21,7 +21,7 @@ open class ReactWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: ReactWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: CppWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private lateinit var interfaceDetailInfo: InterfaceDetailInfoDTO
         private var modelName: String? = null
@@ -58,7 +58,7 @@ open class ReactWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        ReactModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
+                        CppModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
                     )
                 }
             }

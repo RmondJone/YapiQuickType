@@ -1,4 +1,4 @@
-package com.guohanlin.react
+package com.guohanlin.language.oc
 
 import com.guohanlin.CodeStructure
 import com.guohanlin.model.InterfaceDetailInfoData
@@ -8,12 +8,7 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
 
-/**
- * 注释：React 实体生成构造器
- * 时间：2022/3/24 14:28
- * 作者：郭翰林
- */
-class ReactModelCodeStructure(
+class OcMainCodeStructure(
     directory: PsiDirectory,
     data: InterfaceDetailInfoData,
     modelName: String,
@@ -23,20 +18,20 @@ class ReactModelCodeStructure(
     private var codeStr: String = interfaceResponseDTO.info
 
     override fun creatCode(): String {
-        return codeStr
-    }
-
-    override fun creatFileName(): String {
-        return "${fileName}.ts"
+        return codeStr.split("// QT${fileName}.m")[1]
     }
 
     override fun updateCode(psiFile: PsiFile) {
         val document = PsiDocumentManager.getInstance(getProject()).getDocument(psiFile)
         document?.deleteString(0, document.textLength)
-        document?.insertString(0, codeStr)
+        document?.insertString(0, codeStr.split("// QT${fileName}.m")[1])
+    }
+
+    override fun creatFileName(): String {
+        return "QT${fileName}.m"
     }
 
     override fun creatFileType(): FileType {
-        return ReactFileType()
+        return OcMainFileType();
     }
 }

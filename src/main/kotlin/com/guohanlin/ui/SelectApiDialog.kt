@@ -31,7 +31,6 @@ class SelectApiDialog(canBeParent: Boolean) : DialogWrapper(canBeParent) {
     var catMenuData: CatMenuData
     var interfaceInfo: InterfaceInfo
     var selectPlatform: String
-    var isNeedModel: Boolean
     lateinit var modelInput: JTextField
 
     init {
@@ -41,7 +40,6 @@ class SelectApiDialog(canBeParent: Boolean) : DialogWrapper(canBeParent) {
         catMenuData = Constant.catMenuDataList[0]
         interfaceInfo = Constant.interfaceList[0]
         selectPlatform = Constant.platformList[0]
-        isNeedModel = false
     }
 
     override fun createCenterPanel(): JComponent? {

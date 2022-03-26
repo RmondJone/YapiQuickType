@@ -1,7 +1,7 @@
 package com.guohanlin.utils
 
 import com.guohanlin.creatPsiFile
-import com.guohanlin.language.react.ReactModelCodeStructure
+import com.guohanlin.language.android.JavaModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
 import com.intellij.openapi.command.WriteCommandAction
@@ -9,11 +9,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
 /**
- * 注释：React 模块构造器
- * 时间：2022/3/24 15:00
+ * 注释：Java Builder
+ * 时间：2021/8/31 0031 19:56
  * 作者：郭翰林
  */
-open class ReactWriteCommandBuilder {
+open class JavaWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -21,12 +21,13 @@ open class ReactWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: ReactWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: JavaWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private lateinit var interfaceDetailInfo: InterfaceDetailInfoDTO
         private var modelName: String? = null
         private var interfaceResponse: InterfaceResponseDTO? = null
         private var project: Project = mBuilder.project
+        private var isArrayModel: Boolean = false
 
         //设置Psi文件夹
         fun setPsiDirectory(directory: PsiDirectory): Builder {
@@ -52,13 +53,19 @@ open class ReactWriteCommandBuilder {
             return this
         }
 
+        //设置返回数据是否为数组
+        fun setIsArrayModel(isArrayModel: Boolean): Builder {
+            this.isArrayModel = isArrayModel
+            return this
+        }
+
         //构建
         fun build() {
             WriteCommandAction.runWriteCommandAction(project) {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        ReactModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
+                        JavaModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
                     )
                 }
             }

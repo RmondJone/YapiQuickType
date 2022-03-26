@@ -1,19 +1,14 @@
 package com.guohanlin.utils
 
 import com.guohanlin.creatPsiFile
-import com.guohanlin.language.react.ReactModelCodeStructure
+import com.guohanlin.language.go.GoModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
-/**
- * 注释：React 模块构造器
- * 时间：2022/3/24 15:00
- * 作者：郭翰林
- */
-open class ReactWriteCommandBuilder {
+class GoWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -21,7 +16,7 @@ open class ReactWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: ReactWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: GoWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private lateinit var interfaceDetailInfo: InterfaceDetailInfoDTO
         private var modelName: String? = null
@@ -58,7 +53,7 @@ open class ReactWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        ReactModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
+                        GoModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
                     )
                 }
             }

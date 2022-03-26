@@ -1,21 +1,16 @@
-package com.guohanlin.flutter
+package com.guohanlin.language.android
 
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
 
-/**
- * 注释：Dart文件类型
- * 时间：2021/8/9 0009 16:19
- * 作者：郭翰林
- */
-class DartFileType : FileType {
+class JavaFileType : FileType {
     override fun getCharset(p0: VirtualFile, p1: ByteArray): String? {
         return null
     }
 
     override fun getDefaultExtension(): String {
-        return ".dart"
+        return ".java"
     }
 
     override fun getIcon(): Icon? {
@@ -23,12 +18,12 @@ class DartFileType : FileType {
     }
 
     override fun getName(): String {
-        return "Dart file"
+        return "Java file"
 
     }
 
     override fun getDescription(): String {
-        return "Dart source file"
+        return "Java source file"
 
     }
 

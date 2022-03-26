@@ -1,25 +1,25 @@
-package com.guohanlin.react
+package com.guohanlin.language.oc
 
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
 
 /**
- * 注释：React 文件类型
+ * 注释：OC .m文件类型
  * 时间：2022/3/24 14:21
  * 作者：郭翰林
  */
-class ReactFileType : FileType {
+class OcMainFileType : FileType {
     override fun getName(): String {
-        return "React File"
+        return "OC Main File"
     }
 
     override fun getDescription(): String {
-        return "Dart source file"
+        return "OC Main source file"
     }
 
     override fun getDefaultExtension(): String {
-        return ".ts"
+        return ".m"
     }
 
     override fun getIcon(): Icon? {
