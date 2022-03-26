@@ -22,9 +22,8 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-//    version '2017.1'
     version '2021.2'
-    pluginName 'Yapi QuickType插件'
+    pluginName 'Yapi QuickType'
     updateSinceUntilBuild false
 }
 

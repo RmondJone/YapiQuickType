@@ -1,16 +1,23 @@
 <idea-plugin>
     <id>com.guohanlin.yapiquicktype</id>
-    <name>Yapi QuickType插件</name>
+    <name>Yapi QuickType</name>
     <vendor email="2318560278@qq.com">郭翰林</vendor>
 
     <description>
         <![CDATA[
-           <h1>Yapi QuickType插件</h1>
-           <p>帮助快速生成模板代码的插件</p>
-           <br/>
+           <h1>YApi QuickType plugin</h1>
+           <p>Open API through YApi, quickly generate plug-ins for interface entity code, support language：</p>
+           <p>Java、Kotlin、Dart、TypeScript、Swift、OC、Go、C++</p>
+           <p>Source address：</p>
+           <a href="https://github.com/RmondJone/YapiQuickType">https://github.com/RmondJone/YapiQuickType</a>
+           <p>QuickType service source code：</p>
+           <a href="https://github.com/RmondJone/QuickTypeNode">https://github.com/RmondJone/QuickTypeNode</a>
+
+           <h1>YApi QuickType插件</h1>
+           <p>通过YApi开放Api，快速生成接口实体代码的插件,支持语言：</p>
+           <p>Java、Kotlin、Dart、TypeScript、Swift、OC、Go、C++</p>
            <p>源码地址：</p>
            <a href="https://github.com/RmondJone/YapiQuickType">https://github.com/RmondJone/YapiQuickType</a>
-           <br/>
            <p>QuickType服务源码：</p>
            <a href="https://github.com/RmondJone/QuickTypeNode">https://github.com/RmondJone/QuickTypeNode</a>
         ]]>
