@@ -13,7 +13,7 @@ interface ApiService {
      * 时间：2021/5/24 0024 10:10
      * 作者：郭翰林
      */
-    @GET("api/interface/getCatMenu")
+    @GET("/api/interface/getCatMenu")
     fun getCatMenu(@QueryMap params: Map<String, String>): Observable<CatMenuDTO>
 
     /**
@@ -21,7 +21,7 @@ interface ApiService {
      * 时间：2021/5/24 0024 11:01
      * 作者：郭翰林
      */
-    @GET("api/interface/list_cat?page=1&limit=100")
+    @GET("/api/interface/list_cat?page=1&limit=100")
     fun getInterfaceByCat(@QueryMap params: Map<String, String>): Observable<InterfaceByCatDTO>
 
     /**
@@ -29,7 +29,7 @@ interface ApiService {
      * 时间：2021/5/26 0026 17:43
      * 作者：郭翰林
      */
-    @GET("api/interface/get")
+    @GET("/api/interface/get")
     fun getInterfaceDetail(@QueryMap params: Map<String, String>): Observable<InterfaceDetailInfoDTO>
 
     /**
@@ -37,7 +37,7 @@ interface ApiService {
      * 时间：2021/8/31 0031 15:47
      * 作者：郭翰林
      */
-    @POST("api/quickType/conversion")
+    @POST("/api/quickType/conversion")
     @FormUrlEncoded
     fun getInterfaceModel(@FieldMap params: Map<String, String>): Observable<InterfaceResponseDTO>
 }

@@ -9,7 +9,7 @@ object Constant {
     const val PROJECT_SETTING_CONFIG = "project_setting_config"
 
     //基础Uri
-    const val BASE_URL = "http://yapi.smart-xwork.cn/"
+    const val BASE_URL = "http://yapi.smart-xwork.cn"
 
     //QuickType服务地址
     const val QUICK_TYPE_URL = "http://quicktype.guohanlin.com/"
