@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.0.0'
+version '1.0.1'
 
 repositories {
     mavenLocal()
@@ -34,6 +34,6 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-      Yapi QuickType插件
+      Yapi QuickType插件描述完善
       """
 }
