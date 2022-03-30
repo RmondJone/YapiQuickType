@@ -46,7 +46,9 @@
 # 四、使用反馈
 
 欢迎加入我的电报群：[https://t.me/YApiQuickType](https://t.me/YApiQuickType)
-![](http://www.guohanlin.com/images/quicktype_tg_group.jpg)
+
+<img src="http://www.guohanlin.com/images/quicktype_tg_group.jpg" width="300"/>
+
 QQ群：[264587303](https://jq.qq.com/?_wv=1027&k=96R8fd5v)
 
-![](http://www.guohanlin.com/images/qq_group.jpg)
+<img src="http://www.guohanlin.com/images/qq_group.jpg" width="300"/>
