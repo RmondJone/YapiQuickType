@@ -98,6 +98,7 @@ class YApiAction : AnAction() {
         params["targetLanguage"] = selectPlatform
         params["className"] = modelName
         params["jsonString"] = JSON.toJSONString(jsonSchema)
+        MyNotifier.notifyMessage(project, "正在请求QuickTypeNode服务中，请稍后...")
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
@@ -182,6 +183,7 @@ class YApiAction : AnAction() {
                             .build()
                     }
                 }
+                MyNotifier.notifyMessage(project, "恭喜！代码已经生成成功！")
             }
     }
 }
