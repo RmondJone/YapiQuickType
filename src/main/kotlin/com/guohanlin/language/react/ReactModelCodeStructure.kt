@@ -15,7 +15,7 @@ import com.intellij.psi.PsiFile
  */
 class ReactModelCodeStructure(
     directory: PsiDirectory,
-    data: InterfaceDetailInfoData,
+    data: InterfaceDetailInfoData?,
     modelName: String,
     interfaceResponseDTO: InterfaceResponseDTO
 ) : CodeStructure(directory, data) {

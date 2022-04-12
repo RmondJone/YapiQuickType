@@ -15,7 +15,7 @@ import com.intellij.psi.PsiFile
  */
 class KotlinModelCodeStructure(
     directory: PsiDirectory,
-    data: InterfaceDetailInfoData,
+    data: InterfaceDetailInfoData?,
     private val modelName: String,
     private val interfaceResponseDTO: InterfaceResponseDTO
 ) :

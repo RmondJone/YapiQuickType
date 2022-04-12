@@ -15,7 +15,7 @@ import com.intellij.psi.impl.file.PsiDirectoryFactory
  */
 abstract class CodeStructure(
     private val directory: PsiDirectory,
-    private val data: InterfaceDetailInfoData
+    private val data: InterfaceDetailInfoData?
 ) {
     /**
      * 默认空格

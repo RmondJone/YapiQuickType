@@ -23,7 +23,7 @@ class CppWriteCommandBuilder {
 
     class Builder internal constructor(mBuilder: CppWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
-        private lateinit var interfaceDetailInfo: InterfaceDetailInfoDTO
+        private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
         private var interfaceResponse: InterfaceResponseDTO? = null
         private var project: Project = mBuilder.project
@@ -58,7 +58,12 @@ class CppWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        CppModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
+                        CppModelCodeStructure(
+                            directory,
+                            interfaceDetailInfo?.data,
+                            it,
+                            interfaceResponse!!
+                        )
                     )
                 }
             }

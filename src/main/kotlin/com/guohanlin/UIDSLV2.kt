@@ -1,9 +1,11 @@
 package com.guohanlin
 
+import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.EditorFactory
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.fileTypes.PlainTextFileType
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.components.JBCheckBox
@@ -241,16 +243,30 @@ fun Any.jLine(): JSeparator {
     return jLine
 }
 
+/**
+ * 注释：JTextPane DSL
+ * 时间：2022/4/12 11:39 上午
+ * 作者：郭翰林
+ */
+fun Any.jTextPane(size: JBDimension): JTextPane {
+    val jTextPane = JTextPane().apply {
+        preferredSize = size
+    }
+    checkAddView(this, jTextPane)
+    return jTextPane
+}
+
 
 /**
  * generate multiple lines text input component
  */
 fun Any.jTextAreaInput(
-    initText: String,
+    initText: String = "",
     size: JBDimension = JBDimension(400, 50),
     enabled: Boolean = true,
     textLanguageType: LanguageFileType = PlainTextFileType.INSTANCE,
-    onFocusLost: (textAreaInput: Document) -> Unit
+    project: Project,
+    init: (textAreaInput: Document) -> Unit = {},
 ): JComponent {
     val editorFactory = EditorFactory.getInstance()
     val document = editorFactory.createDocument("").apply {
@@ -262,15 +278,10 @@ fun Any.jTextAreaInput(
         autoscrolls = true
         preferredSize = size
     }
-    editor.contentComponent.addFocusListener(object : FocusListener {
-        override fun focusGained(e: FocusEvent?) {
-        }
-
-        override fun focusLost(e: FocusEvent?) {
-            onFocusLost(editor.document)
-        }
-    })
-    editor.document.setText(initText)
+    init(editor.document)
+    WriteCommandAction.runWriteCommandAction(project) {
+        editor.document.setText(initText)
+    }
     checkAddView(this, editor.component)
     return editor.component
 }

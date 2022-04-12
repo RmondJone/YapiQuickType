@@ -18,7 +18,7 @@ class GoWriteCommandBuilder {
 
     class Builder internal constructor(mBuilder: GoWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
-        private lateinit var interfaceDetailInfo: InterfaceDetailInfoDTO
+        private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
         private var interfaceResponse: InterfaceResponseDTO? = null
         private var project: Project = mBuilder.project
@@ -53,7 +53,12 @@ class GoWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        GoModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
+                        GoModelCodeStructure(
+                            directory,
+                            interfaceDetailInfo?.data,
+                            it,
+                            interfaceResponse!!
+                        )
                     )
                 }
             }

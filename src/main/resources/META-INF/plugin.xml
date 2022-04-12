@@ -96,5 +96,9 @@
             icon="/icons/action.svg" description="YApi代码生成插件">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile" />
         </action>
+        <action id="com.guohanlin.json" class="com.guohanlin.JsonAction" text="Json代码生成插件"
+            icon="/icons/action.svg" description="Json代码生成插件">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile" />
+        </action>
     </actions>
 </idea-plugin>

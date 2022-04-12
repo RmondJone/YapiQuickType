@@ -18,7 +18,7 @@ class KotlinWriteCommandBuilder {
 
     class Builder internal constructor(mBuilder: KotlinWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
-        private lateinit var interfaceDetailInfo: InterfaceDetailInfoDTO
+        private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
         private var interfaceResponse: InterfaceResponseDTO? = null
         private var project: Project = mBuilder.project
@@ -60,7 +60,12 @@ class KotlinWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        KotlinModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
+                        KotlinModelCodeStructure(
+                            directory,
+                            interfaceDetailInfo?.data,
+                            it,
+                            interfaceResponse!!
+                        )
                     )
                 }
             }

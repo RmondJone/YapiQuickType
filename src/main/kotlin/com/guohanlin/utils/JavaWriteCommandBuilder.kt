@@ -23,7 +23,7 @@ open class JavaWriteCommandBuilder {
 
     class Builder internal constructor(mBuilder: JavaWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
-        private lateinit var interfaceDetailInfo: InterfaceDetailInfoDTO
+        private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
         private var interfaceResponse: InterfaceResponseDTO? = null
         private var project: Project = mBuilder.project
@@ -65,7 +65,12 @@ open class JavaWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        JavaModelCodeStructure(directory, interfaceDetailInfo.data, it, interfaceResponse!!)
+                        JavaModelCodeStructure(
+                            directory,
+                            interfaceDetailInfo?.data,
+                            it,
+                            interfaceResponse!!
+                        )
                     )
                 }
             }

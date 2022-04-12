@@ -10,7 +10,7 @@ import com.intellij.psi.PsiFile
 
 class CppModelCodeStructure(
     directory: PsiDirectory,
-    data: InterfaceDetailInfoData,
+    data: InterfaceDetailInfoData?,
     modelName: String,
     interfaceResponseDTO: InterfaceResponseDTO
 ) : CodeStructure(directory, data) {
