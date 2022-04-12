@@ -63,7 +63,13 @@ class YApiAction : AnAction() {
                 .subscribe { interfaceDetail ->
                     run {
                         if (interfaceDetail.errcode == 0) {
-                            generateCode(interfaceDetail, selectPlatform, modelName, project, directory)
+                            requestQuickType(
+                                interfaceDetail,
+                                selectPlatform,
+                                modelName,
+                                project,
+                                directory
+                            )
                         }
                     }
                 }
@@ -75,7 +81,7 @@ class YApiAction : AnAction() {
      * 时间：2022/3/26 11:00
      * 作者：郭翰林
      */
-    private fun generateCode(
+    private fun requestQuickType(
         interfaceDetail: InterfaceDetailInfoDTO,
         selectPlatform: String,
         modelName: String,
@@ -87,44 +93,9 @@ class YApiAction : AnAction() {
         val jsonSchema = properties["info"] as JSONObject
         //接口定义返回数据是不是数组
         val isArrayModel = jsonSchema["type"] == "array"
-        when (selectPlatform) {
-            "Java" -> {
-                generateJavaCode(modelName, jsonSchema, project, directory, interfaceDetail, isArrayModel)
-            }
-            "Kotlin" -> {
-                generateKotlinCode(modelName, jsonSchema, project, directory, interfaceDetail, isArrayModel)
-            }
-            "Dart" -> {
-                generateDartCode(modelName, jsonSchema, project, directory, interfaceDetail, isArrayModel)
-            }
-            "TypeScript" -> {
-                generateTsCode(modelName, jsonSchema, project, directory, interfaceDetail)
-            }
-            "C++" -> {
-                generateCppCode(modelName, jsonSchema, project, directory, interfaceDetail)
-            }
-            "Swift" -> {
-                generateSwiftCode(modelName, jsonSchema, project, directory, interfaceDetail)
-            }
-            "Go" -> {
-                generateGoCode(modelName, jsonSchema, project, directory, interfaceDetail)
-            }
-            "Objective-C" -> {
-                generateOcCode(modelName, jsonSchema, project, directory, interfaceDetail)
-            }
-        }
-    }
-
-    private fun generateOcCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO
-    ) {
         val params = HashMap<String, String>()
         params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "Objective-C"
+        params["targetLanguage"] = selectPlatform
         params["className"] = modelName
         params["jsonString"] = JSON.toJSONString(jsonSchema)
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
@@ -134,222 +105,83 @@ class YApiAction : AnAction() {
                 MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
             }
             .subscribe {
-                OcWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setModelName(modelName)
-                    .setInterfaceResponse(it)
-                    .build()
-            }
-    }
-
-    private fun generateGoCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO
-    ) {
-        val params = HashMap<String, String>()
-        params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "Go"
-        params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
-            .getInterfaceModel(params)
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
-            }
-            .subscribe {
-                GoWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setModelName(modelName)
-                    .setInterfaceResponse(it)
-                    .build()
-            }
-    }
-
-    private fun generateSwiftCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO
-    ) {
-        val params = HashMap<String, String>()
-        params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "Swift"
-        params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
-            .getInterfaceModel(params)
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
-            }
-            .subscribe {
-                SwiftWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setModelName(modelName)
-                    .setInterfaceResponse(it)
-                    .build()
-            }
-    }
-
-    private fun generateCppCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO
-    ) {
-        val params = HashMap<String, String>()
-        params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "C++"
-        params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
-            .getInterfaceModel(params)
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
-            }
-            .subscribe {
-                CppWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setModelName(modelName)
-                    .setInterfaceResponse(it)
-                    .build()
-            }
-    }
-
-    private fun generateTsCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO
-    ) {
-        val params = HashMap<String, String>()
-        params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "TypeScript"
-        params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
-            .getInterfaceModel(params)
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
-            }
-            .subscribe {
-                ReactWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setModelName(modelName)
-                    .setInterfaceResponse(it)
-                    .build()
-            }
-    }
-
-    private fun generateDartCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO,
-        isArrayModel: Boolean
-    ) {
-        val params = HashMap<String, String>()
-        params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "Dart"
-        params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
-            .getInterfaceModel(params)
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
-            }
-            .subscribe {
-                DartWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setModelName(modelName)
-                    .setInterfaceResponse(it)
-                    .setIsArrayModel(isArrayModel)
-                    .build()
-            }
-    }
-
-    private fun generateKotlinCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO,
-        isArrayModel: Boolean
-    ) {
-        val params = HashMap<String, String>()
-        params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "Kotlin"
-        params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
-            .getInterfaceModel(params)
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
-            }
-            .subscribe {
-                KotlinWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setInterfaceResponse(it)
-                    .setModelName(modelName)
-                    .setIsArrayModel(isArrayModel)
-                    .build()
-            }
-    }
-
-    private fun generateJavaCode(
-        modelName: String,
-        jsonSchema: JSONObject,
-        project: Project,
-        directory: PsiDirectory,
-        interfaceDetail: InterfaceDetailInfoDTO,
-        isArrayModel: Boolean
-    ) {
-        val params = HashMap<String, String>()
-        params["conversionType"] = "jsonSchema"
-        params["targetLanguage"] = "Java"
-        params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
-            .getInterfaceModel(params)
-            .subscribeOn(Schedulers.io())
-            .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
-            }
-            .subscribe {
-                JavaWriteCommandBuilder()
-                    .newBuilder(project)
-                    .setPsiDirectory(directory)
-                    .setInterfaceDetailInfo(interfaceDetail)
-                    .setInterfaceResponse(it)
-                    .setModelName(modelName)
-                    .setIsArrayModel(isArrayModel)
-                    .build()
+                when (selectPlatform) {
+                    "Java" -> {
+                        JavaWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setInterfaceResponse(it)
+                            .setModelName(modelName)
+                            .setIsArrayModel(isArrayModel)
+                            .build()
+                    }
+                    "Kotlin" -> {
+                        KotlinWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setInterfaceResponse(it)
+                            .setModelName(modelName)
+                            .setIsArrayModel(isArrayModel)
+                            .build()
+                    }
+                    "Dart" -> {
+                        DartWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .setIsArrayModel(isArrayModel)
+                            .build()
+                    }
+                    "TypeScript" -> {
+                        ReactWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                    "C++" -> {
+                        CppWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                    "Swift" -> {
+                        SwiftWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                    "Go" -> {
+                        GoWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                    "Objective-C" -> {
+                        OcWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                }
             }
     }
 }
