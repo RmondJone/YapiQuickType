@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.0.1'
+version '1.1.0'
 
 repositories {
     mavenLocal()
@@ -27,6 +27,10 @@ intellij {
     updateSinceUntilBuild false
 }
 
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
 //指定IDE运行
 //runIde {
 //    ideDirectory = 'C:/Program Files/Android/Android Studio'
@@ -34,6 +38,7 @@ intellij {
 
 patchPluginXml {
     changeNotes """
-      Yapi QuickType插件描述完善
+      1、新增JSON转实体插件功能
+      2、新增请求接口报错提示
       """
 }

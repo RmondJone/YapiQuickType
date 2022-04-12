@@ -26,15 +26,15 @@ import io.reactivex.schedulers.Schedulers
  */
 class YApiAction : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
-        val dialog = SelectApiDialog(false)
+        //获取插件环境
+        val project = e.getData(PlatformDataKeys.PROJECT) ?: return
+        val dialog = SelectApiDialog(project)
         if (dialog.showAndGet()) {
             //根据拿到的接口信息生成代码
             val interfaceInfo = dialog.interfaceInfo
             val projectSetting = dialog.projectSetting
             val selectPlatform = dialog.selectPlatform
             val modelName = dialog.modelInput.text.toString()
-            //获取插件环境
-            val project = e.getData(PlatformDataKeys.PROJECT) ?: return
             val dataContext = e.dataContext
             //当前模块
             val module = LangDataKeys.MODULE.getData(dataContext) ?: return
@@ -57,6 +57,9 @@ class YApiAction : AnAction() {
             val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
             Api.getService(ApiService::class.java, baseUri).getInterfaceDetail(params)
                 .subscribeOn(Schedulers.io())
+                .doOnError {
+                    MyNotifier.notifyError(project, "获取接口详细文档接口请求失败，原因：${it}")
+                }
                 .subscribe { interfaceDetail ->
                     run {
                         if (interfaceDetail.errcode == 0) {
@@ -127,6 +130,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 OcWriteCommandBuilder()
                     .newBuilder(project)
@@ -153,6 +159,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 GoWriteCommandBuilder()
                     .newBuilder(project)
@@ -179,6 +188,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 SwiftWriteCommandBuilder()
                     .newBuilder(project)
@@ -205,6 +217,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 CppWriteCommandBuilder()
                     .newBuilder(project)
@@ -231,6 +246,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 ReactWriteCommandBuilder()
                     .newBuilder(project)
@@ -258,6 +276,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 DartWriteCommandBuilder()
                     .newBuilder(project)
@@ -286,6 +307,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 KotlinWriteCommandBuilder()
                     .newBuilder(project)
@@ -314,6 +338,9 @@ class YApiAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+            }
             .subscribe {
                 JavaWriteCommandBuilder()
                     .newBuilder(project)

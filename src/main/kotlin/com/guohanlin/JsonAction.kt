@@ -1,5 +1,6 @@
 package com.guohanlin
 
+import com.guohanlin.model.InterfaceResponseDTO
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
 import com.guohanlin.ui.JsonToClassDialog
@@ -45,16 +46,16 @@ class JsonAction : AnAction() {
             val modelName = dialog.modelInput.text.toString()
             val selectPlatform = dialog.selectPlatform
             val jsonStr = dialog.textAreaDocument?.text ?: ""
-            generateCode(modelName, jsonStr, selectPlatform, project, directory)
+            requestQuickType(modelName, jsonStr, selectPlatform, project, directory)
         }
     }
 
     /**
-     * 注释：生成代码文件
+     * 注释：请求QuickType服务
      * 时间：2022/4/12 3:55 下午
      * 作者：郭翰林
      */
-    private fun generateCode(
+    private fun requestQuickType(
         modelName: String,
         jsonStr: String,
         targetLanguage: String,
@@ -69,73 +70,92 @@ class JsonAction : AnAction() {
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
-            .subscribe {
-                when (targetLanguage) {
-                    "Java" -> {
-                        JavaWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                    "Kotlin" -> {
-                        KotlinWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                    "Dart" -> {
-                        DartWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                    "TypeScript" -> {
-                        ReactWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                    "C++" -> {
-                        CppWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                    "Swift" -> {
-                        SwiftWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                    "Objective-C" -> {
-                        OcWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                    "Go" -> {
-                        GoWriteCommandBuilder()
-                            .newBuilder(project)
-                            .setPsiDirectory(directory)
-                            .setInterfaceResponse(it)
-                            .setModelName(modelName)
-                            .build()
-                    }
-                }
+            .doOnError {
+                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
             }
+            .subscribe {
+                generateFile(targetLanguage, project, directory, it, modelName)
+            }
+
+    }
+
+    /**
+     * 注释：生成文件
+     * 时间：2022/4/12 4:37 下午
+     * 作者：郭翰林
+     */
+    private fun generateFile(
+        targetLanguage: String,
+        project: Project,
+        directory: PsiDirectory,
+        it: InterfaceResponseDTO,
+        modelName: String
+    ) {
+        when (targetLanguage) {
+            "Java" -> {
+                JavaWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "Kotlin" -> {
+                KotlinWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "Dart" -> {
+                DartWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "TypeScript" -> {
+                ReactWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "C++" -> {
+                CppWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "Swift" -> {
+                SwiftWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "Objective-C" -> {
+                OcWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "Go" -> {
+                GoWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+        }
     }
 }

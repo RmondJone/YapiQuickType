@@ -6,6 +6,7 @@ import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
+import com.guohanlin.utils.MyNotifier
 import com.guohanlin.utils.SharePreferences
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.project.DumbAware
@@ -21,7 +22,7 @@ import io.reactivex.schedulers.Schedulers
 class YApiApplication : StartupActivity, DumbAware {
     override fun runActivity(project: Project) {
         //初始化YApi工程配置
-        initYApiProjectSetting()
+        initYApiProjectSetting(project)
     }
 
     /**
@@ -29,7 +30,7 @@ class YApiApplication : StartupActivity, DumbAware {
      * 时间：2021/7/10 0010 16:18
      * 作者：郭翰林
      */
-    private fun initYApiProjectSetting() {
+    private fun initYApiProjectSetting(project: Project) {
         val settingConfig =
             PropertiesComponent.getInstance().getValue(Constant.PROJECT_SETTING_CONFIG)
         val token: String
@@ -55,6 +56,9 @@ class YApiApplication : StartupActivity, DumbAware {
         //请求第一个工程的YApi接口菜单
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "获取分类菜单接口请求失败，原因：${it}")
+            }
             .subscribe {
                 //注入到内存当中
                 if (it.errcode == 0) {
@@ -65,6 +69,9 @@ class YApiApplication : StartupActivity, DumbAware {
                     catParams["token"] = token
                     Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(catParams)
                         .subscribeOn(Schedulers.io())
+                        .doOnError {
+                            MyNotifier.notifyError(project, "获取某个分类下的接口列表接口失败，原因：${it}")
+                        }
                         .subscribe {
                             if (it.errcode == 0 && it.data.count > 0) {
                                 Constant.interfaceList = it.data.list as ArrayList<InterfaceInfo>

@@ -6,8 +6,10 @@ import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
+import com.guohanlin.utils.MyNotifier
 import com.guohanlin.utils.NumberTextField
 import com.guohanlin.utils.SharePreferences
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import io.reactivex.schedulers.Schedulers
 import java.awt.Dimension
@@ -21,25 +23,29 @@ import javax.swing.JTextField
  * 时间：2021/5/24 0024 11:48
  * 作者：郭翰林
  */
-class SelectApiDialog(canBeParent: Boolean) : DialogWrapper(canBeParent) {
+class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
     private lateinit var projectJComboBox: JComboBox<Any>
     private lateinit var catMenuJComboBox: JComboBox<Any>
     private lateinit var interfaceJComboBox: JComboBox<Any>
     private lateinit var platformJComboBox: JComboBox<Any>
 
-    var projectSetting: ProjectSetting
-    var catMenuData: CatMenuData
-    var interfaceInfo: InterfaceInfo
-    var selectPlatform: String
+    lateinit var projectSetting: ProjectSetting
+    lateinit var catMenuData: CatMenuData
+    lateinit var interfaceInfo: InterfaceInfo
+    lateinit var selectPlatform: String
     lateinit var modelInput: JTextField
 
     init {
         init()
         title = "请选择需要生成代码的接口"
-        projectSetting = Constant.projectList[0]
-        catMenuData = Constant.catMenuDataList[0]
-        interfaceInfo = Constant.interfaceList[0]
-        selectPlatform = Constant.platformList[0]
+        try {
+            projectSetting = Constant.projectList[0]
+            catMenuData = Constant.catMenuDataList[0]
+            interfaceInfo = Constant.interfaceList[0]
+            selectPlatform = Constant.platformList[0]
+        } catch (e: Exception) {
+            MyNotifier.notifyError(project, "插件初始化失败，请检查YApi配置是否正确？请到IDE设置页面-YApi代码生成插件 查看配置")
+        }
     }
 
     override fun createCenterPanel(): JComponent? {
@@ -108,6 +114,9 @@ class SelectApiDialog(canBeParent: Boolean) : DialogWrapper(canBeParent) {
         val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "获取分类菜单接口失败，原因：${it}")
+            }
             .subscribe {
                 if (it.errcode == 0) {
                     catMenuJComboBox.removeAllItems()
@@ -130,6 +139,9 @@ class SelectApiDialog(canBeParent: Boolean) : DialogWrapper(canBeParent) {
         val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
         Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(params)
             .subscribeOn(Schedulers.io())
+            .doOnError {
+                MyNotifier.notifyError(project, "获取某个分类下的接口列表接口失败，原因：${it}")
+            }
             .subscribe {
                 if (it.errcode == 0) {
                     interfaceJComboBox.removeAllItems()

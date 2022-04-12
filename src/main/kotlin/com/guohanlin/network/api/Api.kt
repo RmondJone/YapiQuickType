@@ -16,9 +16,9 @@ object Api {
     fun <T> getService(clazz: Class<T>, baseUrl: String): T {
         //创建OkhttpClient
         val okhttpBuilder = OkHttpClient.Builder()
-        okhttpBuilder.connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
+        okhttpBuilder.connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
         val okhttpClient = okhttpBuilder.build()
         //创建Retrofit客户端
         val retrofit = Retrofit.Builder()

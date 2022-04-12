@@ -84,6 +84,10 @@
         <postStartupActivity implementation="com.guohanlin.YApiApplication" />
     </extensions>
 
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="YApi QuickType Error" displayType="BALLOON" isLogByDefault="true" />
+    </extensions>
+
     <project-components>
         <component>
             <implementation-class>com.guohanlin.ProjectSettingConfig</implementation-class>
