@@ -39,6 +39,7 @@ compileKotlin {
 patchPluginXml {
     changeNotes """
       1、新增JSON转实体插件功能
-      2、新增请求接口报错提示
+      <br/>
+      2、新增请求接口报错、接口请求提示
       """
 }

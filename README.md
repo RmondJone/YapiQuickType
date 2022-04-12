@@ -33,15 +33,19 @@
 
 ##### （1）插件的使用也非常简单，只需要在你想要生成代码的目录右键即可
 
-![](http://www.guohanlin.com/images/quicktype_one.jpg)
+![](https://plugins.jetbrains.com/files/18847/screenshot_d83ff2d1-1ffa-4b68-a7c0-40487fa583c4)
 
-##### （2）选择你配置的项目的对应接口和想要生成的语言
+##### （2）YApi代码生成插件：选择你配置的项目的对应接口和想要生成的语言
 
-![](http://www.guohanlin.com/images/quicktype_two.jpg)
+![](https://plugins.jetbrains.com/files/18847/screenshot_66f98b03-5374-4e4e-ba38-742656c057ee)
 
-##### （3）生成代码效果
+##### （3）JSON代码生成插件：粘贴复制的JSON字符串、输入生成的实体名称、选择想要生成的语言点击OK生成代码
 
-![](http://www.guohanlin.com/images/quicktype_three.jpg)
+![](https://plugins.jetbrains.com/files/18847/screenshot_e8ff159d-deaa-4354-a526-5874c80fd76b)
+
+##### （4）生成代码效果
+
+![](https://plugins.jetbrains.com/files/18847/screenshot_db0c3a01-6dda-480d-8ede-27bb11dc0d30)
 
 # 四、使用反馈
 

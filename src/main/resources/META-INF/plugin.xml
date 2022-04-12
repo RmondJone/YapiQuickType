@@ -29,13 +29,18 @@
                  <li><strong>Select the corresponding interface of the project you configured and the language you want to generate</strong></li>
                  <li><strong>Enter the generated entity name and click OK to generate the code</strong></li>
             </ul>
+            <ul>
+                <li><strong>Click the right-click menu to create a new directory - Json to entity plugin</strong></li>
+                <li><strong>Paste the copied JSON string</strong></li>
+                <li><strong>Enter the generated entity name, select the language you want to generate, and click OK to generate the code</strong></li>
+            </ul>
             <p>Source address：</p>
             <a href="https://github.com/RmondJone/YapiQuickType">https://github.com/RmondJone/YapiQuickType</a>
             <p>QuickType service source code：</p>
             <a href="https://github.com/RmondJone/QuickTypeNode">https://github.com/RmondJone/QuickTypeNode</a>
             <br/>
             <br/>
-                        <h1>YApi QuickType插件介绍</h1>
+            <h1>YApi QuickType插件介绍</h1>
             <h2>一、插件描述</h2>
             <p>日常开发中，我们会用到YApi这个工具，YApi 是一个可本地部署的、打通前后端及QA的、可视化的接口管理平台，可以进行接口定义以及接口模拟的一些操作。</p>
             <p>有关更多的YApi使用教程，可以参考<a href="https://github.com/YMFE/yapi">YApi官网</a>，这里就不再过多的赘述。</p>
@@ -55,9 +60,14 @@
             <h3>插件使用</h3>
             <p>插件配置无误后，插件的使用也非常简单，只需在想要生成代码的目录上右键即可调起插件</p>
             <ul>
-                <li><strong>点击右键菜单目录新建--YApi代码生成插件</strong></li>
+                <li><strong>点击右键菜单目录新建-YApi代码生成插件</strong></li>
                 <li><strong>选择你配置的项目的对应接口和想要生成的语言</strong></li>
                 <li><strong>输入生成的实体名称点击OK生成代码</strong></li>
+            </ul>
+            <ul>
+                <li><strong>点击右键菜单目录新建-Json转实体插件</strong></li>
+                <li><strong>粘贴复制的JSON字符串</strong></li>
+                <li><strong>输入生成的实体名称、选择想要生成的语言点击OK生成代码</strong></li>
             </ul>
             <p>源码地址：</p>
             <a href="https://github.com/RmondJone/YapiQuickType">https://github.com/RmondJone/YapiQuickType</a>
@@ -65,10 +75,11 @@
             <a href="https://github.com/RmondJone/QuickTypeNode">https://github.com/RmondJone/QuickTypeNode</a>
             <br/>
             <br/>
-            <div style="font-size:0"><img src="http://www.guohanlin.com/images/quicktype_setting.png" width="600"/></div>
-            <div style="font-size:0"><img src="http://www.guohanlin.com/images/quicktype_one.jpg" width="600"/></div>
-            <div style="font-size:0"><img src="http://www.guohanlin.com/images/quicktype_two.jpg" width="600"/></div>
-            <div style="font-size:0"><img src="http://www.guohanlin.com/images/quicktype_three.jpg" width="600"/></div>
+            <div style="font-size:0"><img src="https://plugins.jetbrains.com/files/18847/screenshot_56dbf4ea-b64e-4ff9-982d-1a2a93f0cb85" width="600"/></div>
+            <div style="font-size:0"><img src="https://plugins.jetbrains.com/files/18847/screenshot_d83ff2d1-1ffa-4b68-a7c0-40487fa583c4" width="600"/></div>
+            <div style="font-size:0"><img src="https://plugins.jetbrains.com/files/18847/screenshot_e8ff159d-deaa-4354-a526-5874c80fd76b" width="600"/></div>
+            <div style="font-size:0"><img src="https://plugins.jetbrains.com/files/18847/screenshot_66f98b03-5374-4e4e-ba38-742656c057ee" width="600"/></div>
+            <div style="font-size:0"><img src="https://plugins.jetbrains.com/files/18847/screenshot_db0c3a01-6dda-480d-8ede-27bb11dc0d30" width="600"/></div>
         ]]>
     </description>
 
