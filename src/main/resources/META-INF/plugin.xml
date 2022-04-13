@@ -1,4 +1,4 @@
-<idea-plugin>
+<idea-plugin require-restart="true">
     <id>com.guohanlin.yapiquicktype</id>
     <name>Yapi QuickType</name>
     <vendor email="2318560278@qq.com">郭翰林</vendor>

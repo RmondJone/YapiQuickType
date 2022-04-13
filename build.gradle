@@ -33,7 +33,7 @@ compileKotlin {
 
 //指定IDE运行
 //runIde {
-//    ideDirectory = 'C:/Program Files/Android/Android Studio'
+//    ideDirectory = '/Applications/IDEA 2020.1.app/Contents'
 //}
 
 patchPluginXml {
