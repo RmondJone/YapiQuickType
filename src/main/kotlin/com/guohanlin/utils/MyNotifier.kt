@@ -20,11 +20,11 @@ object MyNotifier {
      */
     @JvmStatic
     fun notifyError(project: Project, content: String) {
-        //2020.3版本以下使用这种方式通知
         NotificationGroup("YApi QuickType Error", NotificationDisplayType.BALLOON, true)
             .createNotification(content, NotificationType.ERROR)
             .notify(project)
     }
+
 
     /**
      * 注释：信息悬浮通知

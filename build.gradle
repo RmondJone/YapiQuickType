@@ -22,13 +22,17 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2021.2'
+    version '2017.2'
     pluginName 'Yapi QuickType'
     updateSinceUntilBuild false
 }
 
 compileKotlin {
     kotlinOptions.jvmTarget = "11"
+}
+
+runPluginVerifier {
+    ideVersions = ["WS-2017.2.5"]
 }
 
 //指定IDE运行
