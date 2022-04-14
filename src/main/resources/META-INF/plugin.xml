@@ -83,7 +83,7 @@
         ]]>
     </description>
 
-    <idea-version since-build="171" until-build="193.*" />
+    <idea-version since-build="171" until-build="202.*" />
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
@@ -93,12 +93,6 @@
         <!-- Add your extensions here -->
         <projectConfigurable instance="com.guohanlin.ProjectSettingConfig" />
         <postStartupActivity implementation="com.guohanlin.YApiApplication" />
-    </extensions>
-
-    <extensions defaultExtensionNs="com.intellij">
-        <notificationGroup id="YApi QuickType Error" displayType="BALLOON" isLogByDefault="true" />
-        <notificationGroup id="YApi QuickType Message" displayType="BALLOON"
-            isLogByDefault="true" />
     </extensions>
 
     <project-components>
