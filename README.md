@@ -47,6 +47,7 @@
 
 ![](https://plugins.jetbrains.com/files/18847/screenshot_db0c3a01-6dda-480d-8ede-27bb11dc0d30)
 
+**注：IDE内部版本号低于203的使用FIX-IU171版本**
 # 四、使用反馈
 
 欢迎加入我的电报群：[https://t.me/YApiQuickType](https://t.me/YApiQuickType)
