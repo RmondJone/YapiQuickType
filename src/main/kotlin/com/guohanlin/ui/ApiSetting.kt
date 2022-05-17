@@ -9,6 +9,7 @@ import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
 import com.guohanlin.utils.MyNotifier
 import com.guohanlin.utils.SharePreferences
+import com.guohanlin.utils.message
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.ide.CopyPasteManager
 import com.intellij.openapi.project.Project
@@ -32,7 +33,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         jScrollPanel(JBDimension(500, 300)) {
             jVerticalLinearLayout {
                 jHorizontalLinearLayout {
-                    jLabel("Api请求根路径")
+                    jLabel(message("setting.api.label"))
                     fillSpace()
                 }
                 jLine()
@@ -48,17 +49,17 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                         }
                 }
                 jHorizontalLinearLayout {
-                    jLabel("如果请求QuickTypeNode服务失败，请配置以下Host:172.67.196.35 quicktype.guohanlin.com  ")
-                    jLink("点击复制") {
+                    jLabel(message("setting.api.tip"))
+                    jLink(message("setting.api.copy")) {
                         CopyPasteManager.getInstance()
                             .setContents(StringSelection("172.67.196.35 quicktype.guohanlin.com"))
-                        showMessageTip("复制成功")
+                        showMessageTip(message("copy.success"))
                     }
                     fillSpace()
                 }
                 jLine()
                 jHorizontalLinearLayout {
-                    jLabel("项目配置")
+                    jLabel(message("setting.project.label"))
                     fillSpace()
                 }
                 checkAddView(this, createContainer())
@@ -82,7 +83,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
             ProjectSettingTable(settingConfig as ArrayList<ProjectSetting>)
         } else {
             val projectSetting = ProjectSetting(
-                "测试项目",
+                "Test Project",
                 "143242",
                 "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
             )
@@ -163,7 +164,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
-                MyNotifier.notifyError(project, "获取分类菜单接口请求失败，原因：${it}")
+                MyNotifier.notifyError(project, "${message("notify.getCatMenu.error")}${it}")
             }
             .subscribe {
                 //注入到内存当中
@@ -176,7 +177,10 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                     Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(catParams)
                         .subscribeOn(Schedulers.io())
                         .doOnError {
-                            MyNotifier.notifyError(project, "获取某个分类下的接口列表接口失败，原因：${it}")
+                            MyNotifier.notifyError(
+                                project,
+                                "${message("notify.getInterfaceList.error")}${it}"
+                            )
                         }
                         .subscribe { it ->
                             if (it.errcode == 0 && it.data.count > 0) {

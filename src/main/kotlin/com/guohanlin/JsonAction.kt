@@ -3,6 +3,7 @@ package com.guohanlin
 import com.guohanlin.model.InterfaceResponseDTO
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
+import com.guohanlin.ui.Icons
 import com.guohanlin.ui.JsonToClassDialog
 import com.guohanlin.utils.*
 import com.intellij.openapi.actionSystem.AnAction
@@ -11,17 +12,23 @@ import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ModuleRootManager
+import com.intellij.openapi.util.NlsActions
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import io.reactivex.schedulers.Schedulers
+import javax.swing.Icon
 
 /**
  * 注释：Json转实体代码生成插件
  * 时间：2022/4/12 10:52 上午
  * 作者：郭翰林
  */
-class JsonAction : AnAction() {
+class JsonAction(
+    @NlsActions.ActionText text: String? = message("action.json"),
+    @NlsActions.ActionDescription description: String? = message("action.json"),
+    icon: Icon? = Icons.yapiAction
+) : AnAction(text, description, icon) {
     override fun actionPerformed(e: AnActionEvent) {
         //获取插件环境
         val project = e.getData(PlatformDataKeys.PROJECT) ?: return
@@ -67,16 +74,16 @@ class JsonAction : AnAction() {
         params["targetLanguage"] = targetLanguage
         params["className"] = modelName
         params["jsonString"] = jsonStr
-        MyNotifier.notifyMessage(project, "正在请求QuickTypeNode服务中，请稍后...")
+        MyNotifier.notifyMessage(project, message("notify.quickNode.loading"))
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+                MyNotifier.notifyError(project, "${message("notify.quickNode.error")}${it}")
             }
             .subscribe {
                 generateFile(targetLanguage, project, directory, it, modelName)
-                MyNotifier.notifyMessage(project, "恭喜！代码已经生成成功！")
+                MyNotifier.notifyMessage(project, message("notify.quickNode.success"))
             }
 
     }

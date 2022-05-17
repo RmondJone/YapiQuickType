@@ -1,5 +1,6 @@
 package com.guohanlin
 
+import com.guohanlin.utils.message
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.openapi.actionSystem.AnAction
@@ -118,7 +119,7 @@ fun Any.jHorizontalLinearLayout(init: JHorizontalLinearLayout.() -> Unit): JPane
  * 作者：郭翰林
  */
 fun Any.showMessageTip(message: String) {
-    Messages.showDialog(message, "提示", arrayOf("OK"), 0, null)
+    Messages.showDialog(message, message("tip.title"), arrayOf("OK"), 0, null)
 }
 
 

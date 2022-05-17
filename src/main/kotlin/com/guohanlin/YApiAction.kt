@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
+import com.guohanlin.ui.Icons
 import com.guohanlin.ui.SelectApiDialog
 import com.guohanlin.utils.*
 import com.intellij.openapi.actionSystem.AnAction
@@ -13,10 +14,12 @@ import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ModuleRootManager
+import com.intellij.openapi.util.NlsActions
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import io.reactivex.schedulers.Schedulers
+import javax.swing.Icon
 
 
 /**
@@ -24,7 +27,11 @@ import io.reactivex.schedulers.Schedulers
  * 时间：2021/5/20 0020 20:15
  * 作者：郭翰林
  */
-class YApiAction : AnAction() {
+class YApiAction(
+    @NlsActions.ActionText text: String? = message("action.yapi"),
+    @NlsActions.ActionDescription description: String? = message("action.yapi"),
+    icon: Icon? = Icons.yapiAction
+) : AnAction(text, description, icon) {
     override fun actionPerformed(e: AnActionEvent) {
         //获取插件环境
         val project = e.getData(PlatformDataKeys.PROJECT) ?: return
@@ -58,7 +65,10 @@ class YApiAction : AnAction() {
             Api.getService(ApiService::class.java, baseUri).getInterfaceDetail(params)
                 .subscribeOn(Schedulers.io())
                 .doOnError {
-                    MyNotifier.notifyError(project, "获取接口详细文档接口请求失败，原因：${it}")
+                    MyNotifier.notifyError(
+                        project,
+                        "${message("notify.getInterfaceDetail.error")}${it}"
+                    )
                 }
                 .subscribe { interfaceDetail ->
                     run {
@@ -98,12 +108,12 @@ class YApiAction : AnAction() {
         params["targetLanguage"] = selectPlatform
         params["className"] = modelName
         params["jsonString"] = JSON.toJSONString(jsonSchema)
-        MyNotifier.notifyMessage(project, "正在请求QuickTypeNode服务中，请稍后...")
+        MyNotifier.notifyMessage(project, message("notify.quickNode.loading"))
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
-                MyNotifier.notifyError(project, "请求QuickTypeNode服务失败，原因：${it}")
+                MyNotifier.notifyError(project, "${message("notify.quickNode.error")}${it}")
             }
             .subscribe {
                 when (selectPlatform) {
@@ -183,7 +193,7 @@ class YApiAction : AnAction() {
                             .build()
                     }
                 }
-                MyNotifier.notifyMessage(project, "恭喜！代码已经生成成功！")
+                MyNotifier.notifyMessage(project, message("notify.quickNode.success"))
             }
     }
 }

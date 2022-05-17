@@ -40,7 +40,7 @@ class YApiApplication : StartupActivity, DumbAware {
             params["token"] = "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
             token = "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
             val projectSetting = ProjectSetting(
-                "测试项目",
+                "Test Project",
                 "143242",
                 "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
             )

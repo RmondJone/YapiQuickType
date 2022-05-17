@@ -6,10 +6,7 @@ import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
-import com.guohanlin.utils.MyNotifier
-import com.guohanlin.utils.NumberTextField
-import com.guohanlin.utils.SharePreferences
-import com.guohanlin.utils.StringUtils
+import com.guohanlin.utils.*
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import io.reactivex.schedulers.Schedulers
@@ -39,21 +36,21 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
 
     init {
         init()
-        title = "请选择需要生成代码的接口"
+        title = message("yapi.dialog.title")
         try {
             projectSetting = Constant.projectList[0]
             catMenuData = Constant.catMenuDataList[0]
             interfaceInfo = Constant.interfaceList[0]
             selectPlatform = Constant.platformList[0]
         } catch (e: Exception) {
-            MyNotifier.notifyError(project, "插件初始化失败，请检查YApi配置是否正确？请到IDE设置页面-YApi代码生成插件 查看配置")
+            MyNotifier.notifyError(project, message("notify.pluginInit.error"))
         }
     }
 
     override fun doOKAction() {
         val modelName = modelInput.text.toString()
         if (StringUtils.isEmpty(modelName)) {
-            showMessageTip("请输入实体名称")
+            showMessageTip(message("yapi.dialog.tip"))
             return
         }
         super.doOKAction()
@@ -62,7 +59,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
     override fun createCenterPanel(): JComponent? {
         return jVerticalLinearLayout {
             jHorizontalLinearLayout {
-                jLabel("选择项目：")
+                jLabel(message("yapi.dialog.project"))
                 projectJComboBox = jComboBox(items = Constant.projectList.toArray()) {
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
@@ -73,7 +70,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel("接口分类：")
+                jLabel(message("yapi.dialog.catMenu"))
                 catMenuJComboBox = jComboBox(items = Constant.catMenuDataList.toArray()) {
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
@@ -84,7 +81,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel("接口列表：")
+                jLabel(message("yapi.dialog.interfaceList"))
                 interfaceJComboBox = jComboBox(items = Constant.interfaceList.toArray()) {
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
@@ -94,7 +91,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel("生成语言：")
+                jLabel(message("yapi.dialog.platformList"))
                 platformJComboBox = jComboBox(items = Constant.platformList.toArray()) {
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
@@ -104,7 +101,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel("实体名称：")
+                jLabel(message("yapi.dialog.modelName"))
                 modelInput = jTextInput {
                     minimumSize = Dimension(100, 40)
                     maximumSize = Dimension(300, 40)
@@ -132,7 +129,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
-                MyNotifier.notifyError(project, "获取分类菜单接口失败，原因：${it}")
+                MyNotifier.notifyError(project, "${message("notify.getCatMenu.error")}${it}")
             }
             .subscribe {
                 if (it.errcode == 0) {
@@ -157,7 +154,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
         Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
-                MyNotifier.notifyError(project, "获取某个分类下的接口列表接口失败，原因：${it}")
+                MyNotifier.notifyError(project, "${message("notify.getInterfaceList.error")}${it}")
             }
             .subscribe {
                 if (it.errcode == 0) {

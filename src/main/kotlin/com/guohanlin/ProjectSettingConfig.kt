@@ -1,6 +1,7 @@
 package com.guohanlin
 
 import com.guohanlin.ui.ApiSetting
+import com.guohanlin.utils.message
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.openapi.project.Project
 import com.intellij.ui.components.JBTabbedPane
@@ -17,7 +18,7 @@ class ProjectSettingConfig(private val project: Project) : SearchableConfigurabl
     override fun createComponent(): JComponent {
         apiSetting = ApiSetting(project)
         return JBTabbedPane().apply {
-            add("YApi设置", apiSetting)
+            add(message("setting.title"), apiSetting)
         }
     }
 
@@ -35,7 +36,7 @@ class ProjectSettingConfig(private val project: Project) : SearchableConfigurabl
     }
 
     override fun getDisplayName(): String {
-        return "YApi代码生成插件"
+        return message("setting.label")
     }
 
     override fun getHelpTopic(): String? {
