@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.1.0-FIX-IU171'
+version '1.2.0-FIX-IU171'
 
 repositories {
     mavenLocal()
@@ -22,7 +22,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2017.2'
+    version "2021.2"
     pluginName 'Yapi QuickType'
     updateSinceUntilBuild false
 }
@@ -42,8 +42,12 @@ runPluginVerifier {
 
 patchPluginXml {
     changeNotes """
-      1、新增JSON转实体插件功能
+      1、新增插件国际化
       <br/>
-      2、新增请求接口报错、接口请求提示
+      2、实体名强校验
+      <br/>
+      1. New plugin internationalization
+      <br/>
+      2. Perfect verification logic
       """
 }

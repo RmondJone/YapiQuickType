@@ -4,6 +4,8 @@ import com.guohanlin.*
 import com.guohanlin.json.JSONArray
 import com.guohanlin.json.JSONObject
 import com.guohanlin.utils.NumberTextField
+import com.guohanlin.utils.StringUtils
+import com.guohanlin.utils.message
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.project.Project
@@ -28,15 +30,33 @@ class JsonToClassDialog(private val project: Project) : DialogWrapper(project) {
 
     init {
         init()
-        title = "JSON转实体"
+        title = message("json.dialog.title")
+    }
+
+    override fun doOKAction() {
+        val modelName = modelInput.text.toString()
+        val jsonStr = textAreaDocument?.text.toString().trim()
+        if (StringUtils.isEmpty(jsonStr)) {
+            showMessageTip(message("json.dialog.tip.json"))
+            return
+        }
+        if (!StringUtils.isJSON(jsonStr)) {
+            showMessageTip(message("json.dialog.tip.jsonerr"))
+            return
+        }
+        if (StringUtils.isEmpty(modelName)) {
+            showMessageTip(message("yapi.dialog.tip"))
+            return
+        }
+        super.doOKAction()
     }
 
     override fun createCenterPanel(): JComponent? {
         return jVerticalLinearLayout {
             jHorizontalLinearLayout {
-                jLabel("请输入要转换的JSON字符串")
+                jLabel(message("json.dialog.label"))
                 fillSpace()
-                jButton("格式化", clickListener = {
+                jButton(message("json.dialog.format"), clickListener = {
                     WriteCommandAction.runWriteCommandAction(project) {
                         textAreaDocument?.let {
                             var json: String = it.text
@@ -66,13 +86,13 @@ class JsonToClassDialog(private val project: Project) : DialogWrapper(project) {
             }
             jLine()
             jHorizontalLinearLayout {
-                jLabel("请输入实体名称（驼峰写法）:")
+                jLabel(message("json.dialog.modelName"))
                 modelInput = jTextInput {
                     minimumSize = Dimension(200, 50)
                     document = NumberTextField(30)
                 }
                 fixedSpace(100)
-                jLabel("生成语言：")
+                jLabel(message("json.dialog.platformList"))
                 platformJComboBox = jComboBox(items = Constant.platformList.toArray()) {
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {

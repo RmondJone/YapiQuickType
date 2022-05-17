@@ -1,5 +1,6 @@
 package com.guohanlin.utils
 
+import com.alibaba.fastjson.JSON
 import org.apache.http.util.TextUtils
 
 /**
@@ -8,6 +9,31 @@ import org.apache.http.util.TextUtils
  * 作者：郭翰林
  */
 object StringUtils {
+    /**
+     * 注释：判断是否是空字符串
+     * 时间：2022/5/17 2:25 下午
+     * 作者：郭翰林
+     */
+    fun isEmpty(s: String?): Boolean {
+        return s == null || s.isEmpty()
+    }
+
+    /**
+     * 注释：是否是JSON字符串
+     * 时间：2022/5/17 2:57 下午
+     * 作者：郭翰林
+     */
+    fun isJSON(str: String?): Boolean {
+        var result = false
+        result = try {
+            val obj: Any = JSON.parse(str)
+            true
+        } catch (e: Exception) {
+            false
+        }
+        return result
+    }
+
     /**
      * 注释：转化驼峰写法（首字母大写）
      * 时间：2020/5/27 0027 14:26
