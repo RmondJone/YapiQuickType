@@ -52,6 +52,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                     jLink("点击复制") {
                         CopyPasteManager.getInstance()
                             .setContents(StringSelection("172.67.196.35 quicktype.guohanlin.com"))
+                        showMessageTip("复制成功")
                     }
                     fillSpace()
                 }

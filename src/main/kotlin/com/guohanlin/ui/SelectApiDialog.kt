@@ -35,6 +35,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
     lateinit var selectPlatform: String
     lateinit var modelInput: JTextField
 
+
     init {
         init()
         title = "请选择需要生成代码的接口"
@@ -93,11 +94,17 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel("实体名(驼峰写法)：")
+                jLabel("实体名称：")
                 modelInput = jTextInput {
-                    minimumSize = Dimension(100, 50)
+                    minimumSize = Dimension(100, 40)
+                    maximumSize = Dimension(300, 40)
                     document = NumberTextField(30)
                 }
+            }
+            jHorizontalLinearLayout {
+                fillSpace()
+                jActionButton(SettingsAction())
+                fixedSpace(25)
             }
         }
     }
