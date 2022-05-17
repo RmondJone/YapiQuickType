@@ -5,8 +5,6 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.project.DumbAware
-import com.intellij.openapi.util.NlsActions
-import com.intellij.openapi.util.NlsActions.ActionText
 import javax.swing.Icon
 
 /**
@@ -15,8 +13,8 @@ import javax.swing.Icon
  * 作者：郭翰林
  */
 class SettingsAction(
-    @ActionText text: String? = "YApi设置",
-    @NlsActions.ActionDescription description: String? = "YApi设置",
+    text: String? = "YApi设置",
+    description: String? = "YApi设置",
     icon: Icon? = AllIcons.General.GearPlain
 ) : AnAction(text, description, icon), DumbAware {
 

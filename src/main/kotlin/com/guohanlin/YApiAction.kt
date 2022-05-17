@@ -14,7 +14,6 @@ import com.intellij.openapi.actionSystem.LangDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ModuleRootManager
-import com.intellij.openapi.util.NlsActions
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
@@ -28,8 +27,8 @@ import javax.swing.Icon
  * 作者：郭翰林
  */
 class YApiAction(
-    @NlsActions.ActionText text: String? = message("action.yapi"),
-    @NlsActions.ActionDescription description: String? = message("action.yapi"),
+    text: String? = message("action.yapi"),
+    description: String? = message("action.yapi"),
     icon: Icon? = Icons.yapiAction
 ) : AnAction(text, description, icon) {
     override fun actionPerformed(e: AnActionEvent) {
