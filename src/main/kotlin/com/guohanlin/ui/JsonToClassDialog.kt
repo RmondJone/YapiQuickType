@@ -4,6 +4,7 @@ import com.guohanlin.*
 import com.guohanlin.json.JSONArray
 import com.guohanlin.json.JSONObject
 import com.guohanlin.utils.NumberTextField
+import com.guohanlin.utils.StringUtils
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.project.Project
@@ -29,6 +30,24 @@ class JsonToClassDialog(private val project: Project) : DialogWrapper(project) {
     init {
         init()
         title = "JSON转实体"
+    }
+
+    override fun doOKAction() {
+        val modelName = modelInput.text.toString()
+        val jsonStr = textAreaDocument?.text.toString().trim()
+        if (StringUtils.isEmpty(jsonStr)) {
+            showMessageTip("请输入要转换的JSON字符串")
+            return
+        }
+        if (!StringUtils.isJSON(jsonStr)) {
+            showMessageTip("请输入正确的JSON字符串")
+            return
+        }
+        if (StringUtils.isEmpty(modelName)) {
+            showMessageTip("请输入实体名称")
+            return
+        }
+        super.doOKAction()
     }
 
     override fun createCenterPanel(): JComponent? {
@@ -66,7 +85,7 @@ class JsonToClassDialog(private val project: Project) : DialogWrapper(project) {
             }
             jLine()
             jHorizontalLinearLayout {
-                jLabel("请输入实体名称（驼峰写法）:")
+                jLabel("请输入实体名称:")
                 modelInput = jTextInput {
                     minimumSize = Dimension(200, 50)
                     document = NumberTextField(30)

@@ -9,6 +9,7 @@ import com.guohanlin.network.api.ApiService
 import com.guohanlin.utils.MyNotifier
 import com.guohanlin.utils.NumberTextField
 import com.guohanlin.utils.SharePreferences
+import com.guohanlin.utils.StringUtils
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import io.reactivex.schedulers.Schedulers
@@ -47,6 +48,15 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
         } catch (e: Exception) {
             MyNotifier.notifyError(project, "插件初始化失败，请检查YApi配置是否正确？请到IDE设置页面-YApi代码生成插件 查看配置")
         }
+    }
+
+    override fun doOKAction() {
+        val modelName = modelInput.text.toString()
+        if (StringUtils.isEmpty(modelName)) {
+            showMessageTip("请输入实体名称")
+            return
+        }
+        super.doOKAction()
     }
 
     override fun createCenterPanel(): JComponent? {
