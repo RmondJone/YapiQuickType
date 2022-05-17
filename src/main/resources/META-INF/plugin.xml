@@ -2,7 +2,7 @@
     <id>com.guohanlin.yapiquicktype</id>
     <name>Yapi QuickType</name>
     <vendor email="2318560278@qq.com">郭翰林</vendor>
-
+    <resource-bundle>LanguageBundle</resource-bundle>
     <description>
         <![CDATA[
             <h1>YApi QuickType Plugin Introduction</h1>
@@ -109,12 +109,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="com.guohanlin.api" class="com.guohanlin.YApiAction" text="YApi代码生成插件"
-            icon="/icons/action.svg" description="YApi代码生成插件">
+        <action id="com.guohanlin.api" class="com.guohanlin.YApiAction">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile" />
         </action>
-        <action id="com.guohanlin.json" class="com.guohanlin.JsonAction" text="Json代码生成插件"
-            icon="/icons/action.svg" description="Json代码生成插件">
+        <action id="com.guohanlin.json" class="com.guohanlin.JsonAction">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile" />
         </action>
     </actions>

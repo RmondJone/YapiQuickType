@@ -3,6 +3,7 @@ package com.guohanlin.ui
 import com.alibaba.fastjson.JSON
 import com.guohanlin.Constant
 import com.guohanlin.model.ProjectSetting
+import com.guohanlin.utils.message
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.ui.table.JBTable
 import javax.swing.ListSelectionModel
@@ -40,7 +41,7 @@ class ProjectSettingTable(private var items: ArrayList<ProjectSetting>) : JBTabl
         } else {
             arrayListOf(
                 ProjectSetting(
-                    "测试项目",
+                    "Test Project",
                     "143242",
                     "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
                 )
@@ -142,9 +143,9 @@ class ProjectSettingTable(private var items: ArrayList<ProjectSetting>) : JBTabl
 
         override fun getColumnName(column: Int): String {
             when (column) {
-                0 -> return "项目名称"
-                1 -> return "项目Id"
-                2 -> return "项目Token"
+                0 -> return message("setting.project.name")
+                1 -> return message("setting.project.id")
+                2 -> return message("setting.project.token")
             }
             return super.getColumnName(column)
         }

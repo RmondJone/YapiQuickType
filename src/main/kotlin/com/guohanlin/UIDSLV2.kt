@@ -1,5 +1,10 @@
 package com.guohanlin
 
+import com.guohanlin.utils.message
+import com.intellij.openapi.actionSystem.ActionPlaces
+import com.intellij.openapi.actionSystem.ActionToolbar
+import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.impl.ActionButton
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.EditorFactory
@@ -114,7 +119,7 @@ fun Any.jHorizontalLinearLayout(init: JHorizontalLinearLayout.() -> Unit): JPane
  * 作者：郭翰林
  */
 fun Any.showMessageTip(message: String) {
-    Messages.showDialog(message, "提示", arrayOf("OK"), 0, null)
+    Messages.showDialog(message, message("tip.title"), arrayOf("OK"), 0, null)
 }
 
 
@@ -141,6 +146,25 @@ fun <T> Any.jComboBox(items: Array<T>, addItemListener: (e: ItemEvent?) -> Unit)
     return jComboBox
 }
 
+/**
+ * 注释：自定义Action按钮
+ * 时间：2022/5/17 11:04 上午
+ * 作者：郭翰林
+ */
+fun Any.jActionButton(
+    action: AnAction,
+    maximumSize: Dimension? = ActionToolbar.DEFAULT_MINIMUM_BUTTON_SIZE
+): ActionButton {
+    val button = ActionButton(
+        action,
+        action.templatePresentation,
+        ActionPlaces.UNKNOWN,
+        ActionToolbar.DEFAULT_MINIMUM_BUTTON_SIZE
+    )
+    button.maximumSize = maximumSize
+    checkAddView(this, button)
+    return button
+}
 
 /**
  * generate a JButton component
@@ -292,7 +316,7 @@ fun Any.jTextAreaInput(
  */
 fun Any.jLink(
     text: String,
-    linkURL: String,
+    linkURL: String? = null,
     linkURLColor: String = "#5597EB",
     maxSize: JBDimension? = null,
     onclick: () -> Unit = {}
@@ -304,7 +328,9 @@ fun Any.jLink(
             }
             addMouseListener(object : MouseAdapter() {
                 override fun mouseClicked(e: MouseEvent?) {
-                    Desktop.getDesktop().browse(URI(linkURL))
+                    linkURL?.let {
+                        Desktop.getDesktop().browse(URI(it))
+                    }
                     onclick()
                 }
 
