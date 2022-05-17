@@ -44,7 +44,8 @@ patchPluginXml {
     changeNotes """
       1、新增插件国际化
       <br/>
-      2、实体名强校验
+      2、校验逻辑完善
+      <br/>
       <br/>
       1. New plugin internationalization
       <br/>
