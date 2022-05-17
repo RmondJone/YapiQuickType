@@ -72,7 +72,7 @@ class YApiApplication : StartupActivity, DumbAware {
                         .doOnError {
                             MyNotifier.notifyError(project, "获取某个分类下的接口列表接口失败，原因：${it}")
                         }
-                        .subscribe {
+                        .subscribe { it ->
                             if (it.errcode == 0 && it.data.count > 0) {
                                 Constant.interfaceList = it.data.list as ArrayList<InterfaceInfo>
                             }

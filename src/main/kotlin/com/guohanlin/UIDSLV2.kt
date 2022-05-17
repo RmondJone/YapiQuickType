@@ -292,7 +292,7 @@ fun Any.jTextAreaInput(
  */
 fun Any.jLink(
     text: String,
-    linkURL: String,
+    linkURL: String? = null,
     linkURLColor: String = "#5597EB",
     maxSize: JBDimension? = null,
     onclick: () -> Unit = {}
@@ -304,7 +304,9 @@ fun Any.jLink(
             }
             addMouseListener(object : MouseAdapter() {
                 override fun mouseClicked(e: MouseEvent?) {
-                    Desktop.getDesktop().browse(URI(linkURL))
+                    linkURL?.let {
+                        Desktop.getDesktop().browse(URI(it))
+                    }
                     onclick()
                 }
 
