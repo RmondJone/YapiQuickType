@@ -38,8 +38,13 @@ compileKotlin {
 
 patchPluginXml {
     changeNotes """
-      1、新增JSON转实体插件功能
+      1、新增插件国际化
       <br/>
-      2、新增请求接口报错、接口请求提示
+      2、校验逻辑完善
+      <br/>
+      <br/>
+      1. New plugin internationalization
+      <br/>
+      2. Perfect verification logic
       """
 }
