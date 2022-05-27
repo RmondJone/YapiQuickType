@@ -52,7 +52,7 @@
 **如果请求QuickTypeNode服务失败，请配置以下host**
 
 ```
-172.67.196.35 quicktype.guohanlin.com
+104.168.153.3 quicktype.guohanlin.com
 ```
 
 # 四、使用反馈

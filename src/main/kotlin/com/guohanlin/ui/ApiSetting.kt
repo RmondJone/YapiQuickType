@@ -52,7 +52,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                     jLabel(message("setting.api.tip"))
                     jLink(message("setting.api.copy")) {
                         CopyPasteManager.getInstance()
-                            .setContents(StringSelection("172.67.196.35 quicktype.guohanlin.com"))
+                            .setContents(StringSelection("104.168.153.3 quicktype.guohanlin.com"))
                         showMessageTip(message("copy.success"))
                     }
                     fillSpace()
