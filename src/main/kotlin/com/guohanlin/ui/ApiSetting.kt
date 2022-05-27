@@ -26,6 +26,7 @@ import javax.swing.JTextField
 
 class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
     private lateinit var apiBaseInput: JTextField
+    private lateinit var needParseField: JTextField
     private var projectSettingJson: String = ""
     private lateinit var table: ProjectSettingTable
 
@@ -41,7 +42,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                     apiBaseInput =
                         jTextInput(
                             initText = SharePreferences.get(
-                                Constant.yApiBaseUri,
+                                Constant.YAPI_BASE_URI,
                                 Constant.BASE_URL
                             )
                         ) {
@@ -56,6 +57,19 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                         showMessageTip(message("copy.success"))
                     }
                     fillSpace()
+                }
+                jLine()
+                jHorizontalLinearLayout {
+                    jLabel(message("setting.api.response"))
+                    fillSpace()
+                }
+                needParseField = jTextInput(
+                    initText = SharePreferences.get(
+                        Constant.NEED_PARSE_FIELD,
+                        ""
+                    )
+                ) {
+                    minimumSize = Dimension(350, 50)
                 }
                 jLine()
                 jHorizontalLinearLayout {
@@ -119,8 +133,11 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
     fun isModified(): Boolean {
         val items = table.getItems()
         val currentData = JSON.toJSONString(items)
-        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
-        return currentData != projectSettingJson || baseUri != apiBaseInput.text
+        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+        val needParseFieldText = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        return currentData != projectSettingJson
+                || baseUri != apiBaseInput.text
+                || needParseFieldText != needParseField.text
     }
 
     /**
@@ -130,8 +147,10 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
      */
     fun reset() {
         table.reset()
-        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
         apiBaseInput.text = baseUri
+        val needParseFieldText = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        needParseField.text = needParseFieldText
     }
 
     /**
@@ -145,7 +164,8 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         Constant.projectList = items as ArrayList<ProjectSetting>
         PropertiesComponent.getInstance()
             .setValue(Constant.PROJECT_SETTING_CONFIG, JSON.toJSONString(items))
-        SharePreferences.put(Constant.yApiBaseUri, apiBaseInput.text)
+        SharePreferences.put(Constant.YAPI_BASE_URI, apiBaseInput.text)
+        SharePreferences.put(Constant.NEED_PARSE_FIELD, needParseField.text)
         initYApiProjectSetting(project, settingConfig = items)
     }
 
@@ -159,7 +179,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         params["project_id"] = settingConfig[0].projectId
         params["token"] = settingConfig[0].projectToken
         val token: String = settingConfig[0].projectToken
-        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
         //请求第一个工程的YApi接口菜单
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())

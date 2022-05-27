@@ -61,7 +61,7 @@ class YApiAction(
             val params = HashMap<String, String>()
             params["id"] = interfaceInfo._id.toString()
             params["token"] = projectSetting.projectToken
-            val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+            val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
             Api.getService(ApiService::class.java, baseUri).getInterfaceDetail(params)
                 .subscribeOn(Schedulers.io())
                 .doOnError {
@@ -100,14 +100,25 @@ class YApiAction(
     ) {
         val resBody: JSONObject = JSON.parseObject(interfaceDetail.data.res_body)
         val properties: JSONObject = resBody["properties"] as JSONObject
-        val jsonSchema = properties["info"] as JSONObject
-        //接口定义返回数据是不是数组
-        val isArrayModel = jsonSchema["type"] == "array"
+        val needParseField = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        var jsonString = ""
+        //如果设置中配置了一级解析字段，则从实体中返回的配置的一级字段开始解析
+        if (!StringUtils.isEmpty(needParseField)) {
+            if (properties[needParseField] != null) {
+                val jsonSchema = properties[needParseField] as JSONObject
+                jsonString = JSON.toJSONString(jsonSchema)
+            } else {
+                MyNotifier.notifyMessage(project, message("setting.api.parseError"))
+                jsonString = JSON.toJSONString(resBody)
+            }
+        } else {
+            jsonString = JSON.toJSONString(resBody)
+        }
         val params = HashMap<String, String>()
         params["conversionType"] = "jsonSchema"
         params["targetLanguage"] = selectPlatform
         params["className"] = modelName
-        params["jsonString"] = JSON.toJSONString(jsonSchema)
+        params["jsonString"] = jsonString
         MyNotifier.notifyMessage(project, message("notify.quickNode.loading"))
         Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
             .getInterfaceModel(params)
@@ -124,7 +135,6 @@ class YApiAction(
                             .setInterfaceDetailInfo(interfaceDetail)
                             .setInterfaceResponse(it)
                             .setModelName(modelName)
-                            .setIsArrayModel(isArrayModel)
                             .build()
                     }
                     "Kotlin" -> {
@@ -134,7 +144,6 @@ class YApiAction(
                             .setInterfaceDetailInfo(interfaceDetail)
                             .setInterfaceResponse(it)
                             .setModelName(modelName)
-                            .setIsArrayModel(isArrayModel)
                             .build()
                     }
                     "Dart" -> {
@@ -144,7 +153,6 @@ class YApiAction(
                             .setInterfaceDetailInfo(interfaceDetail)
                             .setModelName(modelName)
                             .setInterfaceResponse(it)
-                            .setIsArrayModel(isArrayModel)
                             .build()
                     }
                     "TypeScript" -> {

@@ -22,7 +22,6 @@ class KotlinWriteCommandBuilder {
         private var modelName: String? = null
         private var interfaceResponse: InterfaceResponseDTO? = null
         private var project: Project = mBuilder.project
-        private var isArrayModel: Boolean = false
 
         //设置Psi文件夹
         fun setPsiDirectory(directory: PsiDirectory): Builder {
@@ -45,12 +44,6 @@ class KotlinWriteCommandBuilder {
         //设置实体转换请求返回
         fun setInterfaceResponse(interfaceResponse: InterfaceResponseDTO): Builder {
             this.interfaceResponse = interfaceResponse
-            return this
-        }
-
-        //设置返回数据是否为数组
-        fun setIsArrayModel(isArrayModel: Boolean): Builder {
-            this.isArrayModel = isArrayModel
             return this
         }
 

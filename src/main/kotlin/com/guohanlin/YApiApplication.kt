@@ -52,7 +52,7 @@ class YApiApplication : StartupActivity, DumbAware {
             token = jsonArray[0].projectToken
             Constant.projectList = jsonArray as ArrayList<ProjectSetting>
         }
-        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
         //请求第一个工程的YApi接口菜单
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())

@@ -55,6 +55,8 @@
 104.168.153.3 quicktype.guohanlin.com
 ```
 
+**如果配置Host还是不行，可能需要翻墙才可以请求到Node服务**
+
 # 四、使用反馈
 
 欢迎加入我的电报群：[https://t.me/YApiQuickType](https://t.me/YApiQuickType)
