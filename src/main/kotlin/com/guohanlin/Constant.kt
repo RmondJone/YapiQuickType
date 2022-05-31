@@ -12,13 +12,16 @@ object Constant {
     const val BASE_URL = "http://yapi.smart-xwork.cn"
 
     //QuickType服务地址
-    const val QUICK_TYPE_URL = "http://quicktype.guohanlin.com/"
+    const val QUICK_TYPE_URL = "http://quicktype.guohanlin.com"
 
     //基本路径保存Key
     const val YAPI_BASE_URI = "yApiBaseUri"
 
     //需要解析的字段
     const val NEED_PARSE_FIELD = "need_parse_field"
+
+    //自定义QuickTypeNode服务
+    const val QUICK_TYPE_SERVICE = "quickTypeService"
 
     //项目配置列表
     var projectList: ArrayList<ProjectSetting> = arrayListOf()

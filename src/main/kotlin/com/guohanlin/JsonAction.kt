@@ -89,7 +89,10 @@ class JsonAction(
         params["className"] = modelName
         params["jsonString"] = jsonStr
         MyNotifier.notifyMessage(project, message("notify.quickNode.loading"))
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
+        //QuickTypeNode服务请求地址
+        val quickTypeService =
+            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+        Api.getService(ApiService::class.java, quickTypeService)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
