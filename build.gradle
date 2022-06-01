@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.2.0'
+version '1.3.0'
 
 repositories {
     mavenLocal()
@@ -38,13 +38,17 @@ compileKotlin {
 
 patchPluginXml {
     changeNotes """
-      1、新增插件国际化
+      1、修复解析实体不正确的问题
       <br/>
-      2、校验逻辑完善
+      2、新增QuickTypeNode本地化配置
+      <br/>
+      3、首页文档国际化
       <br/>
       <br/>
-      1. New plugin internationalization
+      1.Fixed an issue with incorrectly parsed entities
       <br/>
-      2. Perfect verification logic
+      2.Added QuickTypeNode localization configuration
+      <br/>
+      3.Home document internationalization
       """
 }

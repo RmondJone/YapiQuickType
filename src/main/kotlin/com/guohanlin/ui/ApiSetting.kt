@@ -10,6 +10,7 @@ import com.guohanlin.network.api.ApiService
 import com.guohanlin.utils.MyNotifier
 import com.guohanlin.utils.SharePreferences
 import com.guohanlin.utils.message
+import com.intellij.ide.BrowserUtil
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.ide.CopyPasteManager
 import com.intellij.openapi.project.Project
@@ -26,14 +27,17 @@ import javax.swing.JTextField
 
 class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
     private lateinit var apiBaseInput: JTextField
+    private lateinit var needParseField: JTextField
+    private lateinit var quickTypeNodeInput: JTextField
     private var projectSettingJson: String = ""
     private lateinit var table: ProjectSettingTable
 
     init {
         jScrollPanel(JBDimension(500, 300)) {
             jVerticalLinearLayout {
+                //YApi服务配置
                 jHorizontalLinearLayout {
-                    jLabel(message("setting.api.label"))
+                    jLabel(message("setting.api.label"), 15f)
                     fillSpace()
                 }
                 jLine()
@@ -41,25 +45,67 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                     apiBaseInput =
                         jTextInput(
                             initText = SharePreferences.get(
-                                Constant.yApiBaseUri,
+                                Constant.YAPI_BASE_URI,
                                 Constant.BASE_URL
                             )
                         ) {
                             minimumSize = Dimension(350, 50)
                         }
                 }
+                jLine()
+                //自定义QuickTypeNode服务配置
+                jHorizontalLinearLayout {
+                    jLabel(message("setting.api.quicktype.node"), 15f)
+                    jLink(message("setting.api.quicktype.reset")) {
+                        quickTypeNodeInput.text = Constant.QUICK_TYPE_URL
+                    }
+                    fillSpace()
+                }
+                quickTypeNodeInput =
+                    jTextInput(
+                        initText = SharePreferences.get(
+                            Constant.QUICK_TYPE_SERVICE,
+                            Constant.QUICK_TYPE_URL
+                        )
+                    )
                 jHorizontalLinearLayout {
                     jLabel(message("setting.api.tip"))
                     jLink(message("setting.api.copy")) {
                         CopyPasteManager.getInstance()
-                            .setContents(StringSelection("172.67.196.35 quicktype.guohanlin.com"))
+                            .setContents(StringSelection("104.168.153.3 quicktype.guohanlin.com"))
                         showMessageTip(message("copy.success"))
                     }
                     fillSpace()
                 }
-                jLine()
                 jHorizontalLinearLayout {
-                    jLabel(message("setting.project.label"))
+                    jLabel(message("setting.api.quicktype.error"))
+                    jLink(message("quicktypenode.url")) {
+                        BrowserUtil.browse("https://github.com/RmondJone/QuickTypeNode")
+                    }
+                    fillSpace()
+                }
+                jLine()
+                //一级请求解析字段配置
+                jVerticalLinearLayout {
+                    jHorizontalLinearLayout {
+                        jLabel(message("label.parse"), 15f)
+                        fillSpace()
+                    }
+                    jHorizontalLinearLayout {
+                        jLabel(message("setting.api.response"))
+                        fillSpace()
+                    }
+                }
+                needParseField = jTextInput(
+                    initText = SharePreferences.get(
+                        Constant.NEED_PARSE_FIELD,
+                        ""
+                    )
+                )
+                jLine()
+                //YApi项目配置
+                jHorizontalLinearLayout {
+                    jLabel(message("setting.project.label"), 15f)
                     fillSpace()
                 }
                 checkAddView(this, createContainer())
@@ -119,8 +165,14 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
     fun isModified(): Boolean {
         val items = table.getItems()
         val currentData = JSON.toJSONString(items)
-        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
-        return currentData != projectSettingJson || baseUri != apiBaseInput.text
+        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+        val needParseFieldText = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        val yApiQuickTypeText =
+            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+        return currentData != projectSettingJson
+                || baseUri != apiBaseInput.text
+                || needParseFieldText != needParseField.text
+                || yApiQuickTypeText != quickTypeNodeInput.text
     }
 
     /**
@@ -130,8 +182,13 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
      */
     fun reset() {
         table.reset()
-        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
         apiBaseInput.text = baseUri
+        val needParseFieldText = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        needParseField.text = needParseFieldText
+        val yApiQuickTypeText =
+            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+        quickTypeNodeInput.text = yApiQuickTypeText
     }
 
     /**
@@ -145,7 +202,9 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         Constant.projectList = items as ArrayList<ProjectSetting>
         PropertiesComponent.getInstance()
             .setValue(Constant.PROJECT_SETTING_CONFIG, JSON.toJSONString(items))
-        SharePreferences.put(Constant.yApiBaseUri, apiBaseInput.text)
+        SharePreferences.put(Constant.YAPI_BASE_URI, apiBaseInput.text)
+        SharePreferences.put(Constant.NEED_PARSE_FIELD, needParseField.text)
+        SharePreferences.put(Constant.QUICK_TYPE_SERVICE, quickTypeNodeInput.text)
         initYApiProjectSetting(project, settingConfig = items)
     }
 
@@ -159,7 +218,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         params["project_id"] = settingConfig[0].projectId
         params["token"] = settingConfig[0].projectToken
         val token: String = settingConfig[0].projectToken
-        val baseUri = SharePreferences.get(Constant.yApiBaseUri, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
         //请求第一个工程的YApi接口菜单
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())

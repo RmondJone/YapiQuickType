@@ -1,5 +1,7 @@
 package com.guohanlin
 
+import com.alibaba.fastjson.JSON
+import com.alibaba.fastjson.JSONObject
 import com.guohanlin.model.InterfaceResponseDTO
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
@@ -53,7 +55,19 @@ class JsonAction(
             val modelName = dialog.modelInput.text.toString()
             val selectPlatform = dialog.selectPlatform
             val jsonStr = dialog.textAreaDocument?.text ?: ""
-            requestQuickType(modelName, jsonStr, selectPlatform, project, directory)
+            val resBody: JSONObject = JSON.parseObject(jsonStr)
+            val needParseField = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+            var jsonString = jsonStr
+            //如果设置中配置了一级解析字段，则从JSON串中配置的一级字段开始解析
+            if (!StringUtils.isEmpty(needParseField)) {
+                if (resBody[needParseField] != null) {
+                    val jsonSchema = resBody[needParseField] as JSONObject
+                    jsonString = JSON.toJSONString(jsonSchema)
+                } else {
+                    MyNotifier.notifyMessage(project, message("setting.api.parseError"))
+                }
+            }
+            requestQuickType(modelName, jsonString, selectPlatform, project, directory)
         }
     }
 
@@ -75,7 +89,10 @@ class JsonAction(
         params["className"] = modelName
         params["jsonString"] = jsonStr
         MyNotifier.notifyMessage(project, message("notify.quickNode.loading"))
-        Api.getService(ApiService::class.java, Constant.QUICK_TYPE_URL)
+        //QuickTypeNode服务请求地址
+        val quickTypeService =
+            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+        Api.getService(ApiService::class.java, quickTypeService)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
