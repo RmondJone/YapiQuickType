@@ -56,7 +56,7 @@
 104.168.153.3 quicktype.guohanlin.com
 ```
 
-如果配置Host还是不行，可能需要翻墙才可以请求到Node服务
+如果配置Host还是不行，你可以尝试本地搭建QuickTypeNode服务，然后服务地址配置到插件中即可 [QuickTypeNode](https://github.com/RmondJone/QuickTypeNode)
 
 # 五、使用反馈
 

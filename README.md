@@ -56,7 +56,7 @@ If the request to QuickTypeNode service fails, you can try to configure the foll
 104.168.153.3 quicktype.guohanlin.com
 ```
 
-If the configuration of Host still does not work, you may need to connect to the external network to request the Node service.
+If configuring the Host still doesn't work, you can try to build the QuickTypeNode service locally, and then configure the service address to the plugin.[QuickTypeNode](https://github.com/RmondJone/QuickTypeNode)
 
 # 5.Use feedback
 
