@@ -31,6 +31,11 @@ compileKotlin {
     kotlinOptions.jvmTarget = "11"
 }
 
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
 //指定IDE运行
 //runIde {
 //    ideDirectory = '/Applications/IDEA 2020.1.app/Contents'
