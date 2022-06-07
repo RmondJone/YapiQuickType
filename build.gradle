@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.3.0-FIX-IU171'
+version '1.3.1-FIX-IU171'
 
 repositories {
     mavenLocal()
@@ -28,7 +28,7 @@ intellij {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 runPluginVerifier {
@@ -36,9 +36,9 @@ runPluginVerifier {
 }
 
 //指定IDE运行
-//runIde {
-//    ideDirectory = '/Applications/IDEA 2020.1.app/Contents'
-//}
+runIde {
+    ideDirectory = '/Applications/IntelliJ IDEA 2019.1.app/Contents'
+}
 
 patchPluginXml {
     changeNotes """
