@@ -1,10 +1,12 @@
+import org.apache.tools.ant.filters.EscapeUnicode
+
 plugins {
     id 'org.jetbrains.intellij' version '0.7.3'
     id 'org.jetbrains.kotlin.jvm' version '1.4.32'
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.3.1-FIX-IU171'
+version '1.3.1-FIX-IU191'
 
 repositories {
     mavenLocal()
@@ -22,7 +24,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version "2017.2"
+    version "2019.1"
     pluginName 'Yapi QuickType'
     updateSinceUntilBuild false
 }
@@ -31,8 +33,19 @@ compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 
-runPluginVerifier {
-    ideVersions = ["WS-2017.2.5"]
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(ProcessResources) {
+    filesMatching('**/*.properties') {
+        filter EscapeUnicode
+    }
 }
 
 //指定IDE运行
@@ -42,17 +55,9 @@ runIde {
 
 patchPluginXml {
     changeNotes """
-      1、修复解析实体不正确的问题
-      <br/>
-      2、新增QuickTypeNode本地化配置
-      <br/>
-      3、首页文档国际化
+      1、适配IU-203以下版本
       <br/>
       <br/>
-      1.Fixed an issue with incorrectly parsed entities
-      <br/>
-      2.Added QuickTypeNode localization configuration
-      <br/>
-      3.Home document internationalization
+      1.Compatible with versions below IU-203
       """
 }
