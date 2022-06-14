@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.3.1-FIX-IU191'
+version '1.3.2-FIX-IU191'
 
 repositories {
     mavenLocal()
@@ -55,9 +55,8 @@ runIde {
 
 patchPluginXml {
     changeNotes """
-      1、适配IU-203以下版本
-      <br/>
-      <br/>
-      1.Compatible with versions below IU-203
+      1、修复解析JSON数组不正确的问题
+      </br>
+      1.Fix incorrect parsing of JSON arrays
       """
 }
