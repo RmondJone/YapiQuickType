@@ -55,9 +55,8 @@ tasks.withType(ProcessResources) {
 
 patchPluginXml {
     changeNotes """
-      1、采用JDK11编译
-      <br/>
-      <br/>
-      1.Compiled with JDK11
+      1、修复解析JSON数组不正确的问题
+      </br>
+      1.Fix incorrect parsing of JSON arrays
       """
 }
