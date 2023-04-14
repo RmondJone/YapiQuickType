@@ -1,8 +1,12 @@
 <idea-plugin require-restart="true">
     <id>com.guohanlin.yapiquicktype</id>
     <name>Yapi QuickType</name>
-    <vendor email="2318560278@qq.com">郭翰林</vendor>
+    <vendor email="2318560278@qq.com" url="https://rmondjone.github.io/">guohanlin</vendor>
+    <product-descriptor code="PYAPIQUICKTYPE" release-date="20230414" release-version="20231"
+        optional="true" />
     <resource-bundle>LanguageBundle</resource-bundle>
+
+    <!--插件描述-->
     <description>
         <![CDATA[
             <h1>YApi QuickType Plugin Introduction</h1>
@@ -34,8 +38,6 @@
                 <li><strong>Paste the copied JSON string</strong></li>
                 <li><strong>Enter the generated entity name, select the language you want to generate, and click OK to generate the code</strong></li>
             </ul>
-            <p>Source address：</p>
-            <a href="https://github.com/RmondJone/YapiQuickType">https://github.com/RmondJone/YapiQuickType</a>
             <p>QuickType service source code：</p>
             <a href="https://github.com/RmondJone/QuickTypeNode">https://github.com/RmondJone/QuickTypeNode</a>
             <br/>
@@ -69,8 +71,6 @@
                 <li><strong>粘贴复制的JSON字符串</strong></li>
                 <li><strong>输入生成的实体名称、选择想要生成的语言点击OK生成代码</strong></li>
             </ul>
-            <p>源码地址：</p>
-            <a href="https://github.com/RmondJone/YapiQuickType">https://github.com/RmondJone/YapiQuickType</a>
             <p>QuickType服务源码：</p>
             <a href="https://github.com/RmondJone/QuickTypeNode">https://github.com/RmondJone/QuickTypeNode</a>
             <br/>
