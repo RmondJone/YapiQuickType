@@ -63,6 +63,6 @@ the plugin.[QuickTypeNode](https://github.com/RmondJone/QuickTypeNode)
 
 Welcome to my telegram group:[https://t.me/YApiQuickType](https://t.me/YApiQuickType)
 
-[FeedBack](https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/)
+[FeedBack:https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/](https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/)
 
 [中文文档](./README_CN.md)

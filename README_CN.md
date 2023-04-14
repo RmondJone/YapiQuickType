@@ -1,4 +1,5 @@
 ## 一、业务背景
+
 日常开发中，我们会用到YApi这个工具，YApi 是一个可本地部署的、打通前后端及QA的、可视化的接口管理平台，可以进行接口定义以及接口模拟的一些操作。
 
 有关更多的YApi使用教程，可以参考[YApi官网](https://github.com/YMFE/yapi)，这里就不再过多的赘述。
@@ -8,6 +9,7 @@
 目前支持生成的语言有：Kotlin、Java、TypeScript、Dart、Swift、Objective-C、Go、C++
 
 ## 二、插件下载以及配置
+
 ### 下载
 
 直接插件市场搜索Yapi QuickType进行下载
@@ -46,3 +48,7 @@
 ![](https://rmondjone.github.io/images/yapi_quicktype_8.webp)
 
 你可以尝试本地搭建QuickTypeNode服务，然后服务地址配置到插件中即可 [QuickTypeNode](https://github.com/RmondJone/QuickTypeNode)
+
+## 三、使用反馈
+
+[反馈地址:https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/](https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/)
