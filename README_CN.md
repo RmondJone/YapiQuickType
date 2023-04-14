@@ -51,4 +51,4 @@
 
 ## 三、使用反馈
 
-[反馈地址:https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/](https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/)
+反馈地址:[https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/](https://rmondjone.github.io/posts/jetbrains/yapi_quick_type/)
