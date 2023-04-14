@@ -1,10 +1,12 @@
+import org.apache.tools.ant.filters.EscapeUnicode
+
 plugins {
     id 'org.jetbrains.intellij' version '0.7.3'
     id 'org.jetbrains.kotlin.jvm' version '1.4.32'
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '1.3.1'
+version '1.3.2'
 
 repositories {
     mavenLocal()
@@ -29,6 +31,21 @@ intellij {
 
 compileKotlin {
     kotlinOptions.jvmTarget = "11"
+}
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(ProcessResources) {
+    filesMatching('**/*.properties') {
+        filter EscapeUnicode
+    }
 }
 
 //指定IDE运行
