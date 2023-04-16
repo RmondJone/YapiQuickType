@@ -14,8 +14,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectConfigurable instance="com.guohanlin.ProjectSettingConfig" />
-        <postStartupActivity implementation="com.guohanlin.YApiApplication" />
+        <projectConfigurable instance="com.guohanlin.ui.ProjectSettingConfig" />
+        <postStartupActivity implementation="com.guohanlin.ui.YApiApplication" />
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
@@ -26,16 +26,16 @@
 
     <project-components>
         <component>
-            <implementation-class>com.guohanlin.ProjectSettingConfig</implementation-class>
+            <implementation-class>com.guohanlin.ui.ProjectSettingConfig</implementation-class>
         </component>
     </project-components>
 
     <actions>
         <!-- Add your actions here -->
-        <action id="com.guohanlin.api" class="com.guohanlin.YApiAction">
+        <action id="com.guohanlin.api" class="com.guohanlin.ui.YApiAction">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile" />
         </action>
-        <action id="com.guohanlin.json" class="com.guohanlin.JsonAction">
+        <action id="com.guohanlin.json" class="com.guohanlin.ui.JsonAction">
             <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile" />
         </action>
     </actions>

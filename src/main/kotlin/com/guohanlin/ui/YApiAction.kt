@@ -1,14 +1,13 @@
-package com.guohanlin
+package com.guohanlin.ui
 
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
+import com.guohanlin.Constant
 import com.guohanlin.builder.*
 import com.guohanlin.json.CheckLicense
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
-import com.guohanlin.ui.Icons
-import com.guohanlin.ui.SelectApiDialog
 import com.guohanlin.utils.*
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent

@@ -1,4 +1,4 @@
-package com.guohanlin
+package com.guohanlin.ui
 
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction

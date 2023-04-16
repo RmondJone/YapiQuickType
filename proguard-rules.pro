@@ -53,8 +53,14 @@
 -keep class com.alibaba.** { *; }
 -dontwarn com.alibaba.**
 
+-keep class com.google.gson.** { *; }
+-dontwarn com.google.gson.**
+
 -keep class  okhttp3.** { *; }
 -dontwarn  okhttp3.**
+
+-keep class  okio.** { *; }
+-dontwarn  okio.**
 
 -keep class  retrofit2.** { *; }
 -dontwarn  retrofit2.**
@@ -72,6 +78,11 @@
 -dontwarn kotlin.**
 -keep class kotlin.** { *; }
 -keep interface kotlin.** { *; }
+
+# 保持native方法不被混淆
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
 
 #保持所有实现Serializable接口的类成员
 -keepclassmembers class * implements java.io.Serializable {

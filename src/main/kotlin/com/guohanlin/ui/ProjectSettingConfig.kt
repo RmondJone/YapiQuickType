@@ -1,6 +1,5 @@
-package com.guohanlin
+package com.guohanlin.ui
 
-import com.guohanlin.ui.ApiSetting
 import com.guohanlin.utils.message
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.openapi.project.Project

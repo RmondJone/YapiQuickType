@@ -23,7 +23,15 @@ class JavaModelCodeStructure(
 
     override fun creatCode(): String {
         var code: String = interfaceResponseDTO.info
-        code = code.replace("package io.quicktype;", "package ${getPackageName()};")
+        code = code.replaceFirst("package io.quicktype;", "package ${getPackageName()};")
+        code = code.replace("package io.quicktype;", "")
+        //删除多余的public class
+        code = code.replace("public class", "class")
+        code = code.replaceFirst("class", "public class")
+        //删除多余的import java.util.List;
+        code = code.replace("import java.util.List;", "import ListPackage")
+        code = code.replaceFirst("import ListPackage", "import java.util.List;")
+        code = code.replace("import ListPackage", "")
         //删除多余空格
         code = code.replace("\n\n\n", "\n")
         return code
