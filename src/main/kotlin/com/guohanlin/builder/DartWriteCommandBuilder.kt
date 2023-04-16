@@ -1,19 +1,19 @@
-package com.guohanlin.utils
+package com.guohanlin.builder
 
-import com.guohanlin.creatPsiFile
-import com.guohanlin.language.react.ReactModelCodeStructure
+import com.guohanlin.language.flutter.FlutterModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
+import com.guohanlin.utils.creatPsiFile
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
 /**
- * 注释：React 模块构造器
- * 时间：2022/3/24 15:00
+ * 注释：Dart Builder
+ * 时间：2021/8/31 0031 19:38
  * 作者：郭翰林
  */
-open class ReactWriteCommandBuilder {
+open class DartWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -21,7 +21,7 @@ open class ReactWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: ReactWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: DartWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
@@ -55,10 +55,11 @@ open class ReactWriteCommandBuilder {
         //构建
         fun build() {
             WriteCommandAction.runWriteCommandAction(project) {
+                //创建文件夹
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        ReactModelCodeStructure(
+                        FlutterModelCodeStructure(
                             directory,
                             interfaceDetailInfo?.data,
                             it,

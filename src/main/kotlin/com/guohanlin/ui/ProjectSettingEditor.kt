@@ -1,9 +1,6 @@
 package com.guohanlin.ui
 
-import com.guohanlin.jHorizontalLinearLayout
-import com.guohanlin.jLabel
-import com.guohanlin.jTextInput
-import com.guohanlin.jVerticalLinearLayout
+import com.guohanlin.utils.*
 import com.guohanlin.model.ProjectSetting
 import com.intellij.openapi.ui.DialogWrapper
 import java.awt.Dimension

@@ -1,6 +1,5 @@
-package com.guohanlin
+package com.guohanlin.utils
 
-import com.guohanlin.utils.message
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.openapi.actionSystem.AnAction

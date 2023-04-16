@@ -1,5 +1,6 @@
-package com.guohanlin
+package com.guohanlin.utils
 
+import com.guohanlin.CodeStructure
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.impl.file.PsiDirectoryFactory
 

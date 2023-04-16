@@ -1,19 +1,14 @@
-package com.guohanlin.utils
+package com.guohanlin.builder
 
-import com.guohanlin.creatPsiFile
-import com.guohanlin.language.cpp.CppModelCodeStructure
+import com.guohanlin.language.go.GoModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
+import com.guohanlin.utils.creatPsiFile
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
-/**
- * 注释：C++ 生成模块
- * 时间：2022/3/26 11:52
- * 作者：郭翰林
- */
-class CppWriteCommandBuilder {
+class GoWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -21,7 +16,7 @@ class CppWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: CppWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: GoWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
@@ -58,7 +53,7 @@ class CppWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        CppModelCodeStructure(
+                        GoModelCodeStructure(
                             directory,
                             interfaceDetailInfo?.data,
                             it,

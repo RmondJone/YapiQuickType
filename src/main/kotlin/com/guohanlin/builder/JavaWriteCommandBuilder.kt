@@ -1,14 +1,19 @@
-package com.guohanlin.utils
+package com.guohanlin.builder
 
-import com.guohanlin.creatPsiFile
-import com.guohanlin.language.go.GoModelCodeStructure
+import com.guohanlin.language.android.JavaModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
+import com.guohanlin.utils.creatPsiFile
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
-class GoWriteCommandBuilder {
+/**
+ * 注释：Java Builder
+ * 时间：2021/8/31 0031 19:56
+ * 作者：郭翰林
+ */
+open class JavaWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -16,7 +21,7 @@ class GoWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: GoWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: JavaWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
@@ -53,7 +58,7 @@ class GoWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        GoModelCodeStructure(
+                        JavaModelCodeStructure(
                             directory,
                             interfaceDetailInfo?.data,
                             it,

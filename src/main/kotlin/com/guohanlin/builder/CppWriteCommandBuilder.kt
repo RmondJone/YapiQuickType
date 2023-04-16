@@ -1,20 +1,19 @@
-package com.guohanlin.utils
+package com.guohanlin.builder
 
-import com.guohanlin.creatPsiFile
-import com.guohanlin.language.oc.OcHeadCodeStructure
-import com.guohanlin.language.oc.OcMainCodeStructure
+import com.guohanlin.language.cpp.CppModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
+import com.guohanlin.utils.creatPsiFile
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
 /**
- * 注释：OC 模块生成器
- * 时间：2022/3/26 12:32
+ * 注释：C++ 生成模块
+ * 时间：2022/3/26 11:52
  * 作者：郭翰林
  */
-class OcWriteCommandBuilder {
+class CppWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -22,7 +21,7 @@ class OcWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: OcWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: CppWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
@@ -59,16 +58,7 @@ class OcWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        OcHeadCodeStructure(
-                            directory,
-                            interfaceDetailInfo?.data,
-                            it,
-                            interfaceResponse!!
-                        )
-                    )
-                    creatPsiFile(
-                        directory,
-                        OcMainCodeStructure(
+                        CppModelCodeStructure(
                             directory,
                             interfaceDetailInfo?.data,
                             it,

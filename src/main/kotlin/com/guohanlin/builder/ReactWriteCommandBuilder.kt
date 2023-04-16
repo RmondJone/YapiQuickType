@@ -1,19 +1,19 @@
-package com.guohanlin.utils
+package com.guohanlin.builder
 
-import com.guohanlin.creatPsiFile
-import com.guohanlin.language.android.JavaModelCodeStructure
+import com.guohanlin.language.react.ReactModelCodeStructure
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceResponseDTO
+import com.guohanlin.utils.creatPsiFile
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 
 /**
- * 注释：Java Builder
- * 时间：2021/8/31 0031 19:56
+ * 注释：React 模块构造器
+ * 时间：2022/3/24 15:00
  * 作者：郭翰林
  */
-open class JavaWriteCommandBuilder {
+open class ReactWriteCommandBuilder {
     private lateinit var project: Project
 
     open fun newBuilder(project: Project): Builder {
@@ -21,7 +21,7 @@ open class JavaWriteCommandBuilder {
         return Builder(this)
     }
 
-    class Builder internal constructor(mBuilder: JavaWriteCommandBuilder) {
+    class Builder internal constructor(mBuilder: ReactWriteCommandBuilder) {
         private lateinit var directory: PsiDirectory
         private var interfaceDetailInfo: InterfaceDetailInfoDTO? = null
         private var modelName: String? = null
@@ -58,7 +58,7 @@ open class JavaWriteCommandBuilder {
                 modelName?.let {
                     creatPsiFile(
                         directory,
-                        JavaModelCodeStructure(
+                        ReactModelCodeStructure(
                             directory,
                             interfaceDetailInfo?.data,
                             it,

@@ -1,4 +1,11 @@
 import org.apache.tools.ant.filters.EscapeUnicode
+import proguard.gradle.ProGuardTask
+
+buildscript {
+    dependencies {
+        classpath 'net.sf.proguard:proguard-gradle:6.2.2'
+    }
+}
 
 plugins {
     id 'org.jetbrains.intellij' version '0.7.3'
@@ -6,7 +13,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '2023.1.1'
+version '2023.1.2'
 
 repositories {
     mavenLocal()
@@ -28,6 +35,20 @@ intellij {
     pluginName 'Yapi QuickType'
     updateSinceUntilBuild false
 }
+
+/**
+ * 获取插件描述
+ * @return
+ */
+def readDescription() {
+    def descriptionFile = file("$projectDir/DESCRIPTION.md")
+    String content = ""
+    descriptionFile.eachLine { line ->
+        content = "$content\n$line"
+    }
+    return content
+}
+
 
 compileKotlin {
     kotlinOptions.jvmTarget = "11"
@@ -54,10 +75,42 @@ tasks.withType(ProcessResources) {
 //}
 
 patchPluginXml {
+    pluginDescription = readDescription()
     changeNotes """
-      1、切换为付费插件
-      <br/>
-      <br/>
-      1.Switch to paid plugin
+      fix bug
       """
 }
+
+/**
+ * 注释：混淆插件
+ * 时间：2023/4/16 16:17
+ * 作者：郭翰林
+ */
+task proguardPlugin(type: ProGuardTask, dependsOn: compileJava) {
+    printmapping "$buildDir/mapping.txt"
+    //配置混淆文件规则
+    configuration 'proguard-rules.pro'
+    //指定不混淆JDK
+    libraryjars("${System.getProperty("java.home")}/jmods")
+    //参与混淆的类
+    String inputDir = "$buildDir/libs"
+    injars "$inputDir/${project.name}-${version}.jar"
+    //混淆后的文件(Class 或其它)输出目录
+    String outDir = "$buildDir/proguard-classes"
+    delete outDir
+    outjars outDir
+    // 在本task的execute阶段，将混淆后的class文件替换正常class文件
+    doLast {
+        // 删除原有的class文件
+        delete "$inputDir"
+        // 将混淆class文件复制过去
+        copy {
+            from outDir
+            into inputDir
+        }
+    }
+}
+
+//Task任务顺序指定
+tasks.buildPlugin.dependsOn.add(tasks.clean)
+tasks.prepareSandbox.dependsOn.add(proguardPlugin)

@@ -1,7 +1,6 @@
 package com.guohanlin.ui
 
 import com.alibaba.fastjson.JSON
-import com.guohanlin.*
 import com.guohanlin.model.CatMenuData
 import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
@@ -9,6 +8,8 @@ import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
 import com.guohanlin.utils.MyNotifier
 import com.guohanlin.utils.SharePreferences
+import com.guohanlin.utils.*
+import com.guohanlin.*
 import com.guohanlin.utils.message
 import com.intellij.ide.BrowserUtil
 import com.intellij.ide.util.PropertiesComponent
