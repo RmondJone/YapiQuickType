@@ -1,6 +1,7 @@
 package com.guohanlin.language.rust
 
 import com.intellij.openapi.fileTypes.FileType
+import com.intellij.openapi.vfs.VirtualFile
 import javax.swing.Icon
 
 /**
@@ -27,5 +28,9 @@ class RustFileType : FileType {
 
     override fun isBinary(): Boolean {
         return false
+    }
+
+    override fun getCharset(file: VirtualFile, content: ByteArray): String? {
+        return null
     }
 }
