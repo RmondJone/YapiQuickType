@@ -6,22 +6,22 @@ import com.guohanlin.model.ProjectSetting
 
 object Constant {
     //项目配置缓存
-    const val PROJECT_SETTING_CONFIG = "project_setting_config"
+    const val YApiProjectSetting = "project_setting_config"
+
+    //基本路径保存Key
+    const val YApiBaseUri = "yApiBaseUri"
+
+    //需要解析的字段
+    const val NeedParseField = "need_parse_field"
+
+    //自定义QuickTypeNode服务
+    const val QuickTypeService = "quickTypeService"
 
     //基础Uri
-    const val BASE_URL = "http://yapi.smart-xwork.cn"
+    const val BASE_URL = "https://yapi.guohanlin.com"
 
     //QuickType服务地址
     const val QUICK_TYPE_URL = "http://quicktype.guohanlin.com"
-
-    //基本路径保存Key
-    const val YAPI_BASE_URI = "yApiBaseUri"
-
-    //需要解析的字段
-    const val NEED_PARSE_FIELD = "need_parse_field"
-
-    //自定义QuickTypeNode服务
-    const val QUICK_TYPE_SERVICE = "quickTypeService"
 
     //项目配置列表
     var projectList: ArrayList<ProjectSetting> = arrayListOf()
@@ -40,8 +40,12 @@ object Constant {
             "Dart",
             "TypeScript",
             "C++",
+            "C#",
             "Swift",
             "Objective-C",
-            "Go"
+            "Go",
+            "Rust",
+            "Python",
+            "PHP"
         )
 }

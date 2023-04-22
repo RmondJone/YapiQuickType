@@ -3,7 +3,7 @@
 <p>In daily development, we will use the tool YApi. YApi is a local deployable, front-end and back-end and QA, visual interface management platform, which can perform some operations of interface definition and interface simulation.</p>
 <p>For more YApi usage tutorials, you can refer to the YApi official website, and I won't go into too much detail here.</p>
 <p>This plug-in is a coding tool plug-in based on the YApi open source interface. It is mainly used for the rapid generation of the interface definition entity code. As long as a simple configuration is performed in the plug-in settings options, you can quickly generate a variety of items you want with one click. The language interface defines entity codes.</p>
-<p>Currently supported languages ​​are: Kotlin, Java, TypeScript, Dart, Swift, Objective-C, Go, C++</p>
+<p>Currently supported languages ​​are: Kotlin, Java, TypeScript, Dart, Swift, Objective-C, Go, C++, C#, Rust, Python, PHP</p>
 <h2>2. Plug-in configuration and use</h2>
 <h3>Plugin configuration</h3>
 <p>Open the IDE settings page--YApi code generation plug-in, and set the plug-in. The plug-in is set to the following steps:</p>

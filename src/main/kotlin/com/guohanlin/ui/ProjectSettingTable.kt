@@ -35,7 +35,7 @@ class ProjectSettingTable(private var items: ArrayList<ProjectSetting>) : JBTabl
      * 作者：郭翰林
      */
     fun reset() {
-        val config = PropertiesComponent.getInstance().getValue(Constant.PROJECT_SETTING_CONFIG)
+        val config = PropertiesComponent.getInstance().getValue(Constant.YApiProjectSetting)
         items = if (!config.isNullOrEmpty()) {
             JSON.parseArray(config, ProjectSetting::class.java) as ArrayList<ProjectSetting>
         } else {

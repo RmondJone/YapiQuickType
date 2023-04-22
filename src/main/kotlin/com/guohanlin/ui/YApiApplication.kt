@@ -33,17 +33,17 @@ class YApiApplication : StartupActivity, DumbAware {
      */
     private fun initYApiProjectSetting(project: Project) {
         val settingConfig =
-            PropertiesComponent.getInstance().getValue(Constant.PROJECT_SETTING_CONFIG)
+            PropertiesComponent.getInstance().getValue(Constant.YApiProjectSetting)
         val token: String
         val params = HashMap<String, String>()
         if (settingConfig.isNullOrEmpty()) {
-            params["project_id"] = "143242"
-            params["token"] = "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
-            token = "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
+            params["project_id"] = "11"
+            params["token"] = "2c18d9128e8d0b627d2a8c7e48c7e9f8777e300025e7e4206865a2a282308cfb"
+            token = "2c18d9128e8d0b627d2a8c7e48c7e9f8777e300025e7e4206865a2a282308cfb"
             val projectSetting = ProjectSetting(
                 "Test Project",
-                "143242",
-                "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
+                "11",
+                "2c18d9128e8d0b627d2a8c7e48c7e9f8777e300025e7e4206865a2a282308cfb"
             )
             Constant.projectList = arrayListOf(projectSetting)
         } else {
@@ -53,7 +53,8 @@ class YApiApplication : StartupActivity, DumbAware {
             token = jsonArray[0].projectToken
             Constant.projectList = jsonArray as ArrayList<ProjectSetting>
         }
-        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
+        println("YApi路径：$baseUri")
         //请求第一个工程的YApi接口菜单
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())

@@ -46,7 +46,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                     apiBaseInput =
                         jTextInput(
                             initText = SharePreferences.get(
-                                Constant.YAPI_BASE_URI,
+                                Constant.YApiBaseUri,
                                 Constant.BASE_URL
                             )
                         ) {
@@ -65,19 +65,10 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                 quickTypeNodeInput =
                     jTextInput(
                         initText = SharePreferences.get(
-                            Constant.QUICK_TYPE_SERVICE,
+                            Constant.QuickTypeService,
                             Constant.QUICK_TYPE_URL
                         )
                     )
-                jHorizontalLinearLayout {
-                    jLabel(message("setting.api.tip"))
-                    jLink(message("setting.api.copy")) {
-                        CopyPasteManager.getInstance()
-                            .setContents(StringSelection("104.168.153.3 quicktype.guohanlin.com"))
-                        showMessageTip(message("copy.success"))
-                    }
-                    fillSpace()
-                }
                 jHorizontalLinearLayout {
                     jLabel(message("setting.api.quicktype.error"))
                     jLink(message("quicktypenode.url")) {
@@ -99,7 +90,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                 }
                 needParseField = jTextInput(
                     initText = SharePreferences.get(
-                        Constant.NEED_PARSE_FIELD,
+                        Constant.NeedParseField,
                         ""
                     )
                 )
@@ -120,11 +111,11 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
      * 作者：郭翰林
      */
     private fun createContainer(): JPanel {
-        table = if (!PropertiesComponent.getInstance().getValue(Constant.PROJECT_SETTING_CONFIG)
+        table = if (!PropertiesComponent.getInstance().getValue(Constant.YApiProjectSetting)
                 .isNullOrEmpty()
         ) {
             projectSettingJson =
-                PropertiesComponent.getInstance().getValue(Constant.PROJECT_SETTING_CONFIG)
+                PropertiesComponent.getInstance().getValue(Constant.YApiProjectSetting)
                     .toString()
             val settingConfig = JSON.parseArray(projectSettingJson, ProjectSetting::class.java)
             ProjectSettingTable(settingConfig as ArrayList<ProjectSetting>)
@@ -138,7 +129,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
             arrayList.add(projectSetting)
             PropertiesComponent.getInstance()
                 .setValue(
-                    Constant.PROJECT_SETTING_CONFIG, JSON.toJSONString(arrayList)
+                    Constant.YApiProjectSetting, JSON.toJSONString(arrayList)
                 )
             ProjectSettingTable(arrayList)
         }
@@ -166,10 +157,10 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
     fun isModified(): Boolean {
         val items = table.getItems()
         val currentData = JSON.toJSONString(items)
-        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
-        val needParseFieldText = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
+        val needParseFieldText = SharePreferences.get(Constant.NeedParseField, "")
         val yApiQuickTypeText =
-            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+            SharePreferences.get(Constant.QuickTypeService, Constant.QUICK_TYPE_URL)
         return currentData != projectSettingJson
                 || baseUri != apiBaseInput.text
                 || needParseFieldText != needParseField.text
@@ -183,12 +174,12 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
      */
     fun reset() {
         table.reset()
-        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
         apiBaseInput.text = baseUri
-        val needParseFieldText = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        val needParseFieldText = SharePreferences.get(Constant.NeedParseField, "")
         needParseField.text = needParseFieldText
         val yApiQuickTypeText =
-            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+            SharePreferences.get(Constant.QuickTypeService, Constant.QUICK_TYPE_URL)
         quickTypeNodeInput.text = yApiQuickTypeText
     }
 
@@ -202,10 +193,10 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         //注入内存和缓存
         Constant.projectList = items as ArrayList<ProjectSetting>
         PropertiesComponent.getInstance()
-            .setValue(Constant.PROJECT_SETTING_CONFIG, JSON.toJSONString(items))
-        SharePreferences.put(Constant.YAPI_BASE_URI, apiBaseInput.text)
-        SharePreferences.put(Constant.NEED_PARSE_FIELD, needParseField.text)
-        SharePreferences.put(Constant.QUICK_TYPE_SERVICE, quickTypeNodeInput.text)
+            .setValue(Constant.YApiProjectSetting, JSON.toJSONString(items))
+        SharePreferences.put(Constant.YApiBaseUri, apiBaseInput.text)
+        SharePreferences.put(Constant.NeedParseField, needParseField.text)
+        SharePreferences.put(Constant.QuickTypeService, quickTypeNodeInput.text)
         initYApiProjectSetting(project, settingConfig = items)
     }
 
@@ -219,7 +210,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         params["project_id"] = settingConfig[0].projectId
         params["token"] = settingConfig[0].projectToken
         val token: String = settingConfig[0].projectToken
-        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
         //请求第一个工程的YApi接口菜单
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())

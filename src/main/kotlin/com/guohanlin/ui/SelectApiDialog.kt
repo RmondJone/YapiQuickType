@@ -103,7 +103,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
             jHorizontalLinearLayout {
                 jLabel(message("yapi.dialog.modelName"))
                 modelInput = jTextInput {
-                    minimumSize = Dimension(100, 40)
+                    minimumSize = Dimension(300, 40)
                     maximumSize = Dimension(300, 40)
                     document = NumberTextField(30)
                 }
@@ -125,7 +125,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
         val params = HashMap<String, String>()
         params["token"] = projectSetting.projectToken
         params["project_id"] = projectSetting.projectId
-        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
         Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
             .subscribeOn(Schedulers.io())
             .doOnError {
@@ -150,7 +150,7 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
         val params = HashMap<String, String>()
         params["catid"] = catMenuData._id.toString()
         params["token"] = projectSetting.projectToken
-        val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+        val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
         Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(params)
             .subscribeOn(Schedulers.io())
             .doOnError {

@@ -71,7 +71,7 @@ class YApiAction(
             val params = HashMap<String, String>()
             params["id"] = interfaceInfo._id.toString()
             params["token"] = projectSetting.projectToken
-            val baseUri = SharePreferences.get(Constant.YAPI_BASE_URI, Constant.BASE_URL)
+            val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
             Api.getService(ApiService::class.java, baseUri).getInterfaceDetail(params)
                 .subscribeOn(Schedulers.io())
                 .doOnError {
@@ -110,7 +110,7 @@ class YApiAction(
     ) {
         val resBody: JSONObject = JSON.parseObject(interfaceDetail.data.res_body)
         val properties: JSONObject = resBody["properties"] as JSONObject
-        val needParseField = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+        val needParseField = SharePreferences.get(Constant.NeedParseField, "")
         var jsonString = ""
         //如果设置中配置了一级解析字段，则从实体中返回的配置的一级字段开始解析
         if (!StringUtils.isEmpty(needParseField)) {
@@ -132,7 +132,7 @@ class YApiAction(
         MyNotifier.notifyMessage(project, message("notify.quickNode.loading"))
         //QuickTypeNode服务请求地址
         val quickTypeService =
-            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+            SharePreferences.get(Constant.QuickTypeService, Constant.QUICK_TYPE_URL)
         Api.getService(ApiService::class.java, quickTypeService)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
@@ -186,8 +186,26 @@ class YApiAction(
                             .setInterfaceResponse(it)
                             .build()
                     }
+                    "C#" -> {
+                        CSharpWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
                     "Swift" -> {
                         SwiftWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                    "Objective-C" -> {
+                        OcWriteCommandBuilder()
                             .newBuilder(project)
                             .setPsiDirectory(directory)
                             .setInterfaceDetailInfo(interfaceDetail)
@@ -204,8 +222,26 @@ class YApiAction(
                             .setInterfaceResponse(it)
                             .build()
                     }
-                    "Objective-C" -> {
-                        OcWriteCommandBuilder()
+                    "Rust" -> {
+                        RustWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                    "Python" -> {
+                        PythonWriteCommandBuilder()
+                            .newBuilder(project)
+                            .setPsiDirectory(directory)
+                            .setInterfaceDetailInfo(interfaceDetail)
+                            .setModelName(modelName)
+                            .setInterfaceResponse(it)
+                            .build()
+                    }
+                    "PHP" -> {
+                        PhpWriteCommandBuilder()
                             .newBuilder(project)
                             .setPsiDirectory(directory)
                             .setInterfaceDetailInfo(interfaceDetail)

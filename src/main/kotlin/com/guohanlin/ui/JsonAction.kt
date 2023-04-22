@@ -72,7 +72,7 @@ class JsonAction(
                 val jsonArray = JSON.parseArray(jsonStr)
                 resBody = jsonArray.getJSONObject(0)
             }
-            val needParseField = SharePreferences.get(Constant.NEED_PARSE_FIELD, "")
+            val needParseField = SharePreferences.get(Constant.NeedParseField, "")
             var jsonString = JSON.toJSONString(resBody)
             //如果设置中配置了一级解析字段，则从JSON串中配置的一级字段开始解析
             if (!StringUtils.isEmpty(needParseField)) {
@@ -107,7 +107,7 @@ class JsonAction(
         MyNotifier.notifyMessage(project, message("notify.quickNode.loading"))
         //QuickTypeNode服务请求地址
         val quickTypeService =
-            SharePreferences.get(Constant.QUICK_TYPE_SERVICE, Constant.QUICK_TYPE_URL)
+            SharePreferences.get(Constant.QuickTypeService, Constant.QUICK_TYPE_URL)
         Api.getService(ApiService::class.java, quickTypeService)
             .getInterfaceModel(params)
             .subscribeOn(Schedulers.io())
@@ -174,6 +174,14 @@ class JsonAction(
                     .setModelName(modelName)
                     .build()
             }
+            "C#" -> {
+                CSharpWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
             "Swift" -> {
                 SwiftWriteCommandBuilder()
                     .newBuilder(project)
@@ -192,6 +200,30 @@ class JsonAction(
             }
             "Go" -> {
                 GoWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "Rust" -> {
+                RustWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "Python" -> {
+                PythonWriteCommandBuilder()
+                    .newBuilder(project)
+                    .setPsiDirectory(directory)
+                    .setInterfaceResponse(it)
+                    .setModelName(modelName)
+                    .build()
+            }
+            "PHP" -> {
+                PhpWriteCommandBuilder()
                     .newBuilder(project)
                     .setPsiDirectory(directory)
                     .setInterfaceResponse(it)
