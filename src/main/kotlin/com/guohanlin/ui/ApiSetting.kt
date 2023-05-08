@@ -1,19 +1,15 @@
 package com.guohanlin.ui
 
 import com.alibaba.fastjson.JSON
+import com.guohanlin.Constant
 import com.guohanlin.model.CatMenuData
 import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
-import com.guohanlin.utils.MyNotifier
-import com.guohanlin.utils.SharePreferences
 import com.guohanlin.utils.*
-import com.guohanlin.*
-import com.guohanlin.utils.message
 import com.intellij.ide.BrowserUtil
 import com.intellij.ide.util.PropertiesComponent
-import com.intellij.openapi.ide.CopyPasteManager
 import com.intellij.openapi.project.Project
 import com.intellij.ui.DoubleClickListener
 import com.intellij.ui.ToolbarDecorator
@@ -21,7 +17,6 @@ import com.intellij.util.ui.JBDimension
 import io.reactivex.schedulers.Schedulers
 import java.awt.BorderLayout
 import java.awt.Dimension
-import java.awt.datatransfer.StringSelection
 import java.awt.event.MouseEvent
 import javax.swing.JPanel
 import javax.swing.JTextField
@@ -194,9 +189,18 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         Constant.projectList = items as ArrayList<ProjectSetting>
         PropertiesComponent.getInstance()
             .setValue(Constant.YApiProjectSetting, JSON.toJSONString(items))
-        SharePreferences.put(Constant.YApiBaseUri, apiBaseInput.text)
+        //自动注入"/"
+        var quickNodeUri = quickTypeNodeInput.text
+        if (!quickNodeUri.endsWith("/")) {
+            quickNodeUri = "${quickNodeUri}/"
+        }
+        var apiBaseUri = apiBaseInput.text
+        if (!apiBaseUri.endsWith("/")) {
+            apiBaseUri = "${apiBaseUri}/"
+        }
+        SharePreferences.put(Constant.YApiBaseUri, apiBaseUri)
         SharePreferences.put(Constant.NeedParseField, needParseField.text)
-        SharePreferences.put(Constant.QuickTypeService, quickTypeNodeInput.text)
+        SharePreferences.put(Constant.QuickTypeService, quickNodeUri)
         initYApiProjectSetting(project, settingConfig = items)
     }
 
