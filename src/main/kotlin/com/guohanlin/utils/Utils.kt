@@ -1,8 +1,16 @@
 package com.guohanlin.utils
 
 import com.guohanlin.CodeStructure
+import com.guohanlin.Constant
+import com.guohanlin.model.CatMenuData
+import com.guohanlin.model.InterfaceInfo
+import com.guohanlin.model.ProjectSetting
+import com.guohanlin.network.api.Api
+import com.guohanlin.network.api.ApiService
+import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.impl.file.PsiDirectoryFactory
+import io.reactivex.schedulers.Schedulers
 
 /**
  * 注释：创建Psi文件夹
@@ -79,4 +87,50 @@ fun repeatStr(repeat: String?, number: Int): String? {
         stringBuilder.append(repeat)
     }
     return stringBuilder.toString()
+}
+
+/**
+ * 注释：更新YApi工程配置
+ * 时间：2021/7/10 0010 16:18
+ * 作者：郭翰林
+ */
+fun updateYApiProjectSetting(
+    project: Project,
+    settingConfig: ProjectSetting,
+) {
+    val params = HashMap<String, String>()
+    params["project_id"] = settingConfig.projectId
+    params["token"] = settingConfig.projectToken
+    val token: String = settingConfig.projectToken
+    val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
+    //请求第一个工程的YApi接口菜单
+    Api.getService(ApiService::class.java, baseUri).getCatMenu(params)
+        .subscribeOn(Schedulers.io())
+        .doOnError {
+            MyNotifier.notifyError(project, "${message("notify.getCatMenu.error")}${it}")
+        }
+        .subscribe {
+            //注入到内存当中
+            if (it.errcode == 0) {
+                Constant.catMenuDataList = it.data as ArrayList<CatMenuData>
+                //请求第一个分类下的接口数据
+                val catParams = HashMap<String, String>()
+                catParams["catid"] = it.data[0]._id.toString()
+                catParams["token"] = token
+                Api.getService(ApiService::class.java, baseUri).getInterfaceByCat(catParams)
+                    .subscribeOn(Schedulers.io())
+                    .doOnError {
+                        MyNotifier.notifyError(
+                            project,
+                            "${message("notify.getInterfaceList.error")}${it}"
+                        )
+                    }
+                    .subscribe { it ->
+                        if (it.errcode == 0 && it.data.count > 0) {
+                            Constant.interfaceList = it.data.list as ArrayList<InterfaceInfo>
+                            println("YApi接口已经更新！！！")
+                        }
+                    }
+            }
+        }
 }

@@ -6,6 +6,8 @@ import com.guohanlin.Constant
 import com.guohanlin.builder.*
 import com.guohanlin.json.CheckLicense
 import com.guohanlin.model.InterfaceDetailInfoDTO
+import com.guohanlin.model.InterfaceInfo
+import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
 import com.guohanlin.utils.*
@@ -20,6 +22,7 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import io.reactivex.schedulers.Schedulers
+import org.jetbrains.annotations.Nullable
 import java.lang.Boolean
 import javax.swing.Icon
 import kotlin.String
@@ -52,47 +55,77 @@ class YApiAction(
             val projectSetting = dialog.projectSetting
             val selectPlatform = dialog.selectPlatform
             val modelName = dialog.modelInput.text.toString()
-            val dataContext = e.dataContext
-            //当前模块
-            val module = LangDataKeys.MODULE.getData(dataContext) ?: return
-            //当前文件夹
-            val directory = when (val navigatable = LangDataKeys.NAVIGATABLE.getData(dataContext)) {
-                is PsiDirectory -> navigatable
-                is PsiFile -> navigatable.containingDirectory
-                else -> {
-                    val root = ModuleRootManager.getInstance(module)
-                    root.sourceRoots
-                        .asSequence()
-                        .mapNotNull {
-                            PsiManager.getInstance(project).findDirectory(it)
-                        }.firstOrNull()
-                }
-            } ?: return
-            val params = HashMap<String, String>()
-            params["id"] = interfaceInfo._id.toString()
-            params["token"] = projectSetting.projectToken
-            val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
-            Api.getService(ApiService::class.java, baseUri).getInterfaceDetail(params)
-                .subscribeOn(Schedulers.io())
-                .doOnError {
-                    MyNotifier.notifyError(
-                        project,
-                        "${message("notify.getInterfaceDetail.error")}${it}"
-                    )
-                }
-                .subscribe { interfaceDetail ->
-                    run {
-                        if (interfaceDetail.errcode == 0) {
-                            requestQuickType(
-                                interfaceDetail,
-                                selectPlatform,
-                                modelName,
-                                project,
-                                directory
-                            )
-                        }
+            requestInterfaceInfo(
+                e,
+                project,
+                interfaceInfo,
+                projectSetting,
+                selectPlatform,
+                modelName
+            )
+            //更新YApi接口
+            updateYApiProjectSetting(project, Constant.projectList[0])
+        }
+    }
+
+    /**
+     * 注释：请求接口详情并生成代码
+     * 时间：2023/5/9 19:22
+     * 作者：郭翰林
+     */
+    private fun requestInterfaceInfo(
+        e: AnActionEvent,
+        project: @Nullable Project,
+        interfaceInfo: InterfaceInfo,
+        projectSetting: ProjectSetting,
+        selectPlatform: String,
+        modelName: String
+    ) {
+        val dataContext = e.dataContext
+        //当前模块
+        val module = LangDataKeys.MODULE.getData(dataContext)
+        //当前文件夹
+        if (module != null) {
+            val directory =
+                when (val navigatable = LangDataKeys.NAVIGATABLE.getData(dataContext)) {
+                    is PsiDirectory -> navigatable
+                    is PsiFile -> navigatable.containingDirectory
+                    else -> {
+                        val root = ModuleRootManager.getInstance(module!!)
+                        root.sourceRoots
+                            .asSequence()
+                            .mapNotNull {
+                                PsiManager.getInstance(project).findDirectory(it)
+                            }.firstOrNull()
                     }
                 }
+            if (directory != null) {
+                val params = HashMap<String, String>()
+                params["id"] = interfaceInfo._id.toString()
+                params["token"] = projectSetting.projectToken
+                val baseUri = SharePreferences.get(Constant.YApiBaseUri, Constant.BASE_URL)
+                Api.getService(ApiService::class.java, baseUri).getInterfaceDetail(params)
+                    .subscribeOn(Schedulers.io())
+                    .doOnError {
+                        MyNotifier.notifyError(
+                            project,
+                            "${message("notify.getInterfaceDetail.error")}${it}"
+                        )
+                    }
+                    .subscribe { interfaceDetail ->
+                        run {
+                            if (interfaceDetail.errcode == 0) {
+                                requestQuickType(
+                                    interfaceDetail,
+                                    selectPlatform,
+                                    modelName,
+                                    project,
+                                    directory
+                                )
+                            }
+                        }
+                    }
+            }
         }
     }
 
