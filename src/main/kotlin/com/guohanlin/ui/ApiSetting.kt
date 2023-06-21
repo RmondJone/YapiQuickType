@@ -184,15 +184,8 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
         Constant.projectList = items as ArrayList<ProjectSetting>
         PropertiesComponent.getInstance()
             .setValue(Constant.YApiProjectSetting, JSON.toJSONString(items))
-        //自动注入"/"
-        var quickNodeUri = quickTypeNodeInput.text
-        if (!quickNodeUri.endsWith("/")) {
-            quickNodeUri = "${quickNodeUri}/"
-        }
-        var apiBaseUri = apiBaseInput.text
-        if (!apiBaseUri.endsWith("/")) {
-            apiBaseUri = "${apiBaseUri}/"
-        }
+        val quickNodeUri = quickTypeNodeInput.text
+        val apiBaseUri = apiBaseInput.text
         SharePreferences.put(Constant.YApiBaseUri, apiBaseUri)
         SharePreferences.put(Constant.NeedParseField, needParseField.text)
         SharePreferences.put(Constant.QuickTypeService, quickNodeUri)
