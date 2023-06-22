@@ -1,5 +1,5 @@
-1、修复Java更新文件生成不对问题
+1、去除保存配置地址末尾自动加/逻辑
 <br/>
 <br/>
 
-1. Fix Java update file generation issue
+1. Remove the automatic addition of logic at the end of the saved configuration address
