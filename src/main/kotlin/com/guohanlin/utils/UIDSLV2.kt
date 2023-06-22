@@ -1,5 +1,6 @@
 package com.guohanlin.utils
 
+import com.guohanlin.ui.Icons
 import com.intellij.openapi.actionSystem.ActionPlaces
 import com.intellij.openapi.actionSystem.ActionToolbar
 import com.intellij.openapi.actionSystem.AnAction
@@ -12,12 +13,14 @@ import com.intellij.openapi.fileTypes.PlainTextFileType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.IconLoader
+import com.intellij.ui.IconManager
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextField
 import com.intellij.util.ui.JBDimension
 import com.intellij.util.ui.JBUI
+import net.miginfocom.layout.CC
 import java.awt.*
 import java.awt.event.*
 import java.net.URI
@@ -365,7 +368,7 @@ fun Any.jGridLayout(rows: Int, columns: Int, init: JPanel.() -> Unit = {}): JPan
  * generate a icon component
  */
 fun Any.jIcon(iconPath: String, init: JLabel.() -> Unit = {}): JLabel {
-    val icon = IconLoader.getIcon(iconPath)
+    val icon = IconManager.getInstance().getIcon(iconPath, Icons::class.java)
     return JBLabel(icon).also { it.init() }
 }
 
@@ -458,6 +461,12 @@ class JVerticalLinearLayout : Box(BoxLayout.Y_AXIS) {
         }
     }
 }
+
+fun fill(): CC = CC().grow().push()
+fun fillX(): CC = CC().growX().pushX()
+fun fillY(): CC = CC().growY().pushY()
+
+fun wrap(): CC = CC().wrap()
 
 
 /**

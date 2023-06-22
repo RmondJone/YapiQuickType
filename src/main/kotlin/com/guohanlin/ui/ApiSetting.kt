@@ -7,6 +7,7 @@ import com.guohanlin.utils.*
 import com.intellij.ide.BrowserUtil
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.project.Project
+import com.intellij.ui.ContextHelpLabel
 import com.intellij.ui.DoubleClickListener
 import com.intellij.ui.ToolbarDecorator
 import com.intellij.util.ui.JBDimension
@@ -29,6 +30,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
                 //YApi服务配置
                 jHorizontalLinearLayout {
                     jLabel(message("setting.api.label"), 15f)
+                    add(ContextHelpLabel.create(message("setting.api.tip")), wrap())
                     fillSpace()
                 }
                 jLine()
