@@ -25,7 +25,7 @@ class ApiSetting(private val project: Project) : JPanel(BorderLayout()) {
     private lateinit var table: ProjectSettingTable
 
     init {
-        jScrollPanel(JBDimension(500, 300)) {
+        jScrollPanel(JBDimension(800, 300)) {
             jVerticalLinearLayout {
                 //YApi服务配置
                 jHorizontalLinearLayout {
