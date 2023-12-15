@@ -4,11 +4,13 @@ import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.guohanlin.Constant
 import com.guohanlin.builder.*
-import com.guohanlin.json.CheckLicense
 import com.guohanlin.model.InterfaceResponseDTO
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
-import com.guohanlin.utils.*
+import com.guohanlin.utils.MyNotifier
+import com.guohanlin.utils.SharePreferences
+import com.guohanlin.utils.StringUtils
+import com.guohanlin.utils.message
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.LangDataKeys
@@ -20,9 +22,7 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import io.reactivex.schedulers.Schedulers
-import java.lang.Boolean
 import javax.swing.Icon
-import kotlin.String
 
 /**
  * 注释：Json转实体代码生成插件
@@ -35,12 +35,6 @@ class JsonAction(
     icon: Icon? = Icons.yapiAction
 ) : AnAction(text, description, icon) {
     override fun actionPerformed(e: AnActionEvent) {
-        //验证许可证明
-        val isLicensed = Boolean.TRUE == CheckLicense.isLicensed()
-        if (!isLicensed) {
-            CheckLicense.requestLicense("Please register our plugin!")
-            return
-        }
         //获取插件环境
         val project = e.getData(PlatformDataKeys.PROJECT) ?: return
         val dataContext = e.dataContext

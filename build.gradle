@@ -13,7 +13,7 @@ plugins {
 }
 
 group 'com.guohanlin.yapiquicktype'
-version '2023.1.6'
+version '2023.2.0'
 
 repositories {
     mavenLocal()
@@ -124,4 +124,4 @@ task proguardPlugin(type: ProGuardTask, dependsOn: compileJava) {
 
 //Task任务顺序指定
 tasks.buildPlugin.dependsOn.add(tasks.clean)
-tasks.prepareSandbox.dependsOn.add(proguardPlugin)
+//tasks.prepareSandbox.dependsOn.add(proguardPlugin)

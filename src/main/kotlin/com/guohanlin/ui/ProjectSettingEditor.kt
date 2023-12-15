@@ -22,30 +22,29 @@ class ProjectSettingEditor(canBeParent: Boolean, projectSetting: ProjectSetting)
 
     init {
         init()
-        title = "项目编辑框"
+        title = message("project.setting.projectEditText")
     }
 
     override fun createCenterPanel(): JComponent? {
         return jVerticalLinearLayout {
             jHorizontalLinearLayout {
-                jLabel("项目名称") { preferredSize = Dimension(80, 20) }
+                jLabel(message("project.setting.projectName")) { preferredSize = Dimension(100, 20) }
                 projectNameInput = jTextInput(initText = projectSetting.projectName) {
-                    minimumSize = Dimension(350, 50)
+                    minimumSize = Dimension(350, 45)
                 }
             }
             jHorizontalLinearLayout {
-                jLabel("项目Id") { preferredSize = Dimension(80, 20) }
+                jLabel(message("project.setting.projectId")) { preferredSize = Dimension(100, 20) }
                 projectIdInput = jTextInput(initText = projectSetting.projectId) {
-                    minimumSize = Dimension(350, 50)
+                    minimumSize = Dimension(350, 45)
                 }
             }
             jHorizontalLinearLayout {
-                jLabel("项目Token") { preferredSize = Dimension(80, 20) }
+                jLabel(message("project.setting.projectToken")) { preferredSize = Dimension(100, 20) }
                 projectTokenInput = jTextInput(initText = projectSetting.projectToken) {
-                    minimumSize = Dimension(350, 50)
+                    minimumSize = Dimension(350, 45)
                 }
             }
-            minimumSize = Dimension(450, 150)
         }
     }
 

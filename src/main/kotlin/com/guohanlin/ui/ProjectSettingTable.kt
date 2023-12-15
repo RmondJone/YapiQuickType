@@ -42,8 +42,8 @@ class ProjectSettingTable(private var items: ArrayList<ProjectSetting>) : JBTabl
             arrayListOf(
                 ProjectSetting(
                     "Test Project",
-                    "143242",
-                    "f1b38e99a5b09073635ab6a901dc2af841f0f507db87086678838c237d9d165b"
+                    "11",
+                    "2c18d9128e8d0b627d2a8c7e48c7e9f8777e300025e7e4206865a2a282308cfb"
                 )
             )
         }

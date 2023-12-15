@@ -206,7 +206,7 @@ fun Any.jLabel(text: String, textSize: Float = 13f, init: JLabel.() -> Unit = {}
 fun Any.jTextInput(
     initText: String = "",
     enabled: Boolean = true,
-    maxSize: JBDimension = JBDimension(10000, 30),
+    maxSize: JBDimension = JBDimension(10000, 45),
     init: JTextField.() -> Unit = {}
 ): JTextField {
     val jTextInput = JBTextField().apply {

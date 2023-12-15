@@ -7,7 +7,7 @@ import com.intellij.ui.components.JBTabbedPane
 import javax.swing.JComponent
 
 /**
- * 注释：新康众YApi代码生成插件项目配置
+ * 注释：YApi代码生成插件项目配置
  * 时间：2021/5/21 0021 8:57
  * 作者：郭翰林
  */

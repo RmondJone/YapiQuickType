@@ -2,8 +2,6 @@
     <id>com.guohanlin.yapiquicktype</id>
     <name>Yapi QuickType</name>
     <vendor email="2318560278@qq.com" url="https://rmondjone.github.io/">guohanlin</vendor>
-    <product-descriptor code="PYAPIQUICKTYPE" release-date="20230414" release-version="20231"
-        optional="true" />
     <resource-bundle>LanguageBundle</resource-bundle>
 
     <idea-version since-build="203" />

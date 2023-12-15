@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.guohanlin.Constant
 import com.guohanlin.builder.*
-import com.guohanlin.json.CheckLicense
 import com.guohanlin.model.InterfaceDetailInfoDTO
 import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
@@ -23,10 +22,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import io.reactivex.schedulers.Schedulers
 import org.jetbrains.annotations.Nullable
-import java.lang.Boolean
 import javax.swing.Icon
-import kotlin.String
-import kotlin.run
 
 
 /**
@@ -40,12 +36,6 @@ class YApiAction(
     icon: Icon? = Icons.yapiAction
 ) : AnAction(text, description, icon) {
     override fun actionPerformed(e: AnActionEvent) {
-        //验证许可证明
-        val isLicensed = Boolean.TRUE == CheckLicense.isLicensed()
-        if (!isLicensed) {
-            CheckLicense.requestLicense("Please register our plugin!")
-            return
-        }
         //获取插件环境
         val project = e.getData(PlatformDataKeys.PROJECT) ?: return
         val dialog = SelectApiDialog(project)
