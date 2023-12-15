@@ -59,8 +59,12 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
     override fun createCenterPanel(): JComponent? {
         return jVerticalLinearLayout {
             jHorizontalLinearLayout {
-                jLabel(message("yapi.dialog.project"))
+                jLabel(message("yapi.dialog.project")) { preferredSize = Dimension(150, 45) }
+                fillSpace()
                 projectJComboBox = jComboBox(items = Constant.projectList.toArray()) {
+                    preferredSize = Dimension(300, 40)
+                    minimumSize = Dimension(300, 40)
+                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             projectSetting = projectJComboBox.selectedItem as ProjectSetting
@@ -70,8 +74,12 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel(message("yapi.dialog.catMenu"))
+                jLabel(message("yapi.dialog.catMenu")) { preferredSize = Dimension(150, 45) }
+                fillSpace()
                 catMenuJComboBox = jComboBox(items = Constant.catMenuDataList.toArray()) {
+                    preferredSize = Dimension(300, 40)
+                    minimumSize = Dimension(300, 40)
+                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             catMenuData = catMenuJComboBox.selectedItem as CatMenuData
@@ -81,8 +89,12 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel(message("yapi.dialog.interfaceList"))
+                jLabel(message("yapi.dialog.interfaceList")) { preferredSize = Dimension(150, 45) }
+                fillSpace()
                 interfaceJComboBox = jComboBox(items = Constant.interfaceList.toArray()) {
+                    preferredSize = Dimension(300, 40)
+                    minimumSize = Dimension(300, 40)
+                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             interfaceInfo = interfaceJComboBox.selectedItem as InterfaceInfo
@@ -91,8 +103,12 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel(message("yapi.dialog.platformList"))
+                jLabel(message("yapi.dialog.platformList")) { preferredSize = Dimension(150, 45) }
+                fillSpace()
                 platformJComboBox = jComboBox(items = Constant.platformList.toArray()) {
+                    preferredSize = Dimension(300, 40)
+                    minimumSize = Dimension(300, 40)
+                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             selectPlatform = platformJComboBox.selectedItem as String
@@ -101,8 +117,10 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 }
             }
             jHorizontalLinearLayout {
-                jLabel(message("yapi.dialog.modelName"))
+                jLabel(message("yapi.dialog.modelName")) { preferredSize = Dimension(150, 45) }
+                fillSpace()
                 modelInput = jTextInput {
+                    preferredSize = Dimension(300, 40)
                     minimumSize = Dimension(300, 40)
                     maximumSize = Dimension(300, 40)
                     document = NumberTextField(30)
