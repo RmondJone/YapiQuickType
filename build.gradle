@@ -124,4 +124,4 @@ task proguardPlugin(type: ProGuardTask, dependsOn: compileJava) {
 
 //Task任务顺序指定
 tasks.buildPlugin.dependsOn.add(tasks.clean)
-//tasks.prepareSandbox.dependsOn.add(proguardPlugin)
+tasks.prepareSandbox.dependsOn.add(proguardPlugin)

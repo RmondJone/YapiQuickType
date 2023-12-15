@@ -2,4 +2,4 @@
 <br/>
 <br/>
 
-1. Remove the automatic addition of logic at the end of the saved configuration address
+1. Change the plugin to free use
