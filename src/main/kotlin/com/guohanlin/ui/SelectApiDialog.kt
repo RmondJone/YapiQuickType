@@ -63,8 +63,6 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 fillSpace()
                 projectJComboBox = jComboBox(items = Constant.projectList.toArray()) {
                     preferredSize = Dimension(300, 40)
-                    minimumSize = Dimension(300, 40)
-                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             projectSetting = projectJComboBox.selectedItem as ProjectSetting
@@ -78,8 +76,6 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 fillSpace()
                 catMenuJComboBox = jComboBox(items = Constant.catMenuDataList.toArray()) {
                     preferredSize = Dimension(300, 40)
-                    minimumSize = Dimension(300, 40)
-                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             catMenuData = catMenuJComboBox.selectedItem as CatMenuData
@@ -93,8 +89,6 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 fillSpace()
                 interfaceJComboBox = jComboBox(items = Constant.interfaceList.toArray()) {
                     preferredSize = Dimension(300, 40)
-                    minimumSize = Dimension(300, 40)
-                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             interfaceInfo = interfaceJComboBox.selectedItem as InterfaceInfo
@@ -107,8 +101,6 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 fillSpace()
                 platformJComboBox = jComboBox(items = Constant.platformList.toArray()) {
                     preferredSize = Dimension(300, 40)
-                    minimumSize = Dimension(300, 40)
-                    maximumSize = Dimension(300, 40)
                     it?.let {
                         if (it.stateChange == ItemEvent.SELECTED) {
                             selectPlatform = platformJComboBox.selectedItem as String
@@ -121,8 +113,6 @@ class SelectApiDialog(private val project: Project) : DialogWrapper(project) {
                 fillSpace()
                 modelInput = jTextInput {
                     preferredSize = Dimension(300, 40)
-                    minimumSize = Dimension(300, 40)
-                    maximumSize = Dimension(300, 40)
                     document = NumberTextField(30)
                 }
             }
