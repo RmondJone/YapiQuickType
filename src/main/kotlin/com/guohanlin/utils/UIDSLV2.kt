@@ -13,7 +13,6 @@ import com.intellij.openapi.fileTypes.PlainTextFileType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.IconLoader
-import com.intellij.ui.IconManager
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
@@ -379,7 +378,7 @@ fun Any.jGridLayout(rows: Int, columns: Int, init: JPanel.() -> Unit = {}): JPan
  * generate a icon component
  */
 fun Any.jIcon(iconPath: String, init: JLabel.() -> Unit = {}): JLabel {
-    val icon = IconManager.getInstance().getIcon(iconPath, Icons::class.java)
+    val icon = IconLoader.getIcon(iconPath, Icons::class.java.classLoader)
     return JBLabel(icon).also { it.init() }
 }
 
