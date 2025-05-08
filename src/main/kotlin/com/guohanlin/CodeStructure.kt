@@ -1,6 +1,8 @@
 package com.guohanlin
 
 import com.guohanlin.model.InterfaceDetailInfoData
+import com.guohanlin.ui.PayInfoDialog
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory

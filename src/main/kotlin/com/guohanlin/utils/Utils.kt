@@ -7,6 +7,8 @@ import com.guohanlin.model.InterfaceInfo
 import com.guohanlin.model.ProjectSetting
 import com.guohanlin.network.api.Api
 import com.guohanlin.network.api.ApiService
+import com.guohanlin.ui.PayInfoDialog
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.impl.file.PsiDirectoryFactory
@@ -42,6 +44,11 @@ fun creatPsiFile(directory: PsiDirectory, codeStructure: CodeStructure) {
             directory.add(psiFile)
         }
     }
+    //显示捐赠弹窗
+    ApplicationManager.getApplication().invokeLater(Runnable {
+        val payInfoDialog: PayInfoDialog = PayInfoDialog()
+        payInfoDialog.show()
+    })
 }
 
 

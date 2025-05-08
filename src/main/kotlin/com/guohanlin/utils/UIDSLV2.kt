@@ -45,6 +45,17 @@ fun checkAddView(parent: Any, vararg children: Component) {
 }
 
 /**
+ * 注释：图片
+ * 时间：2024/12/8 22:29
+ * 作者：郭翰林
+ */
+fun Any.jImage(path: String): Icon {
+    val imageIcon = Icons.load(path)
+    checkAddView(this, JLabel(imageIcon))
+    return imageIcon
+}
+
+/**
  * check and handle the parent Component and child Component with constraintsInParent
  */
 fun checkAddView(parent: Any, child: Component, constraintsInParent: Any?) {
