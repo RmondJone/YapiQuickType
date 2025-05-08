@@ -4,7 +4,7 @@
     <vendor email="2318560278@qq.com" url="https://rmondjone.github.io/">guohanlin</vendor>
     <resource-bundle>LanguageBundle</resource-bundle>
 
-    <idea-version since-build="203" />
+    <idea-version since-build="221" />
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
@@ -12,7 +12,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <projectConfigurable instance="com.guohanlin.ui.ProjectSettingConfig" />
+        <projectConfigurable instance="com.guohanlin.ui.ProjectSettingConfig" groupId="tools"/>
         <postStartupActivity implementation="com.guohanlin.ui.YApiApplication" />
     </extensions>
 

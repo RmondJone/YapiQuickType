@@ -72,7 +72,7 @@ object StringUtils {
                 stringBuilder.append("_")
             }
             if (isNeedLowerCase) {
-                stringBuilder.append(char.toLowerCase())
+                stringBuilder.append(char.lowercase())
             } else {
                 stringBuilder.append(char)
             }
@@ -92,7 +92,7 @@ object StringUtils {
     fun captureName(text: String): String {
         var text = text
         if (text.length > 0) {
-            text = text.substring(0, 1).toUpperCase() + text.substring(1)
+            text = text.substring(0, 1).uppercase() + text.substring(1)
         }
         return text
     }

@@ -1,23 +1,42 @@
-import org.apache.tools.ant.filters.EscapeUnicode
 import proguard.gradle.ProGuardTask
 
 buildscript {
     dependencies {
-        classpath 'net.sf.proguard:proguard-gradle:6.2.2'
+        classpath 'com.guardsquare:proguard-gradle:7.6.0'
     }
 }
 
 plugins {
-    id 'org.jetbrains.intellij' version '0.7.3'
-    id 'org.jetbrains.kotlin.jvm' version '1.4.32'
+    id 'org.jetbrains.kotlin.jvm' version '2.1.0'
+    id 'org.jetbrains.intellij.platform' version '2.5.0'
 }
-
-group 'com.guohanlin.yapiquicktype'
-version '2023.2.0'
 
 repositories {
     mavenLocal()
-    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    mavenCentral()
+    maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+    intellijPlatform {
+        defaultRepositories()
+        jetbrainsRuntime()
+    }
+}
+
+intellijPlatform {
+    pluginConfiguration {
+        version("2025.1.1")
+        id = "com.guohanlin.yapiquicktype"
+        name = "Yapi QuickType"
+        description = readDescription()
+        changeNotes = readChangeLog()
+        ideaVersion {
+            sinceBuild = "221"
+        }
+        vendor {
+            name = "guohanlin"
+            email = "2318560278@qq.com"
+            url = "https://rmondjone.github.io/"
+        }
+    }
 }
 
 dependencies {
@@ -27,14 +46,27 @@ dependencies {
     implementation('com.squareup.retrofit2:converter-gson:2.9.0')
     implementation('com.squareup.retrofit2:adapter-rxjava2:2.9.0')
     implementation('com.squareup.retrofit2:converter-scalars:2.9.0')
+    intellijPlatform {
+        intellijIdeaCommunity '2025.1'
+        pluginVerifier()
+        zipSigner()
+        instrumentationTools()
+    }
 }
 
-// See https://github.com/JetBrains/gradle-intellij-plugin/
-intellij {
-    version '2021.2'
-    pluginName 'Yapi QuickType'
-    updateSinceUntilBuild false
+compileKotlin {
+    kotlinOptions.jvmTarget = "17"
 }
+
+compileJava {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 
 /**
  * 获取插件描述
@@ -62,42 +94,12 @@ def readChangeLog() {
     return content
 }
 
-
-compileKotlin {
-    kotlinOptions.jvmTarget = "11"
-}
-
-compileJava {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-tasks.withType(ProcessResources) {
-    filesMatching('**/*.properties') {
-        filter EscapeUnicode
-    }
-}
-
-//指定IDE运行
-//runIde {
-//    ideDirectory = '/Applications/IDEA 2020.1.app/Contents'
-//}
-
-patchPluginXml {
-    pluginDescription = readDescription()
-    changeNotes = readChangeLog()
-}
-
 /**
  * 注释：混淆插件
  * 时间：2023/4/16 16:17
  * 作者：郭翰林
  */
-task proguardPlugin(type: ProGuardTask, dependsOn: compileJava) {
+task proguardPlugin(type: ProGuardTask, dependsOn: composedJar) {
     printmapping "$buildDir/mapping.txt"
     //配置混淆文件规则
     configuration 'proguard-rules.pro'
@@ -122,6 +124,13 @@ task proguardPlugin(type: ProGuardTask, dependsOn: compileJava) {
     }
 }
 
+
 //Task任务顺序指定
 tasks.buildPlugin.dependsOn.add(tasks.clean)
-tasks.prepareSandbox.dependsOn.add(proguardPlugin)
+
+project.tasks.configureEach { Task currentTask ->
+    if (currentTask.name == "prepareSandbox") {
+        currentTask.dependsOn('proguardPlugin')
+        currentTask.mustRunAfter('proguardPlugin')
+    }
+}

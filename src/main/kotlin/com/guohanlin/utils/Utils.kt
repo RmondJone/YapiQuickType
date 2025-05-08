@@ -67,7 +67,7 @@ fun getPackageName(directory: PsiDirectory): String {
 fun captureName(text: String): String? {
     var text = text
     if (text.isNotEmpty()) {
-        text = text.substring(0, 1).toUpperCase() + text.substring(1)
+        text = text.substring(0, 1).uppercase() + text.substring(1)
     }
     return text
 }
